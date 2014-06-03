@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 
 public class BlockBreaker extends BlockContainer
 {
-	
+	//Git funktioniert
 	private int tier, tickRate, fortune;
 	private double time;
 	private long timeCounter, last;
