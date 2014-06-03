@@ -1,0 +1,14 @@
+tile.placer.name=Blocksetzer
+container.placer=Blocksetzer
+
+tile.blockBreaker.2.name=Abreisser (Eisen)
+tile.blockBreaker.3.name=Abreisser (Diamant)
+container.breaker=Abreisser
+
+tile.autoCrafting.name=Automatische Werkbank
+container.autoCrafting=Automatische Werkbank
+
+tile.breeder.name=Futtertrog
+container.breeder=Futtertrog
+
+itemGroup.advanceddispenserstabs=Verbesserte Spender

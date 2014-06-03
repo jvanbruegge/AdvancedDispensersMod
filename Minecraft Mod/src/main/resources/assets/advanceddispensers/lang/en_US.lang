@@ -1,0 +1,23 @@
+tile.placer.name=Placer
+container.placer=Placer
+
+tile.blockBreaker.2.name=Breaker (Iron)
+tile.blockBreaker.2.s.name=Breaker (Iron, Silk Touch)
+tile.blockBreaker.2.1.name=Breaker (Iron, Fortune 1)
+tile.blockBreaker.2.2.name=Breaker (Iron, Fortune 2)
+tile.blockBreaker.2.3.name=Breaker (Iron, Fortune 3)
+
+tile.blockBreaker.3.name=Breaker (Diamond)
+tile.blockBreaker.3.1.name=Breaker (Diamond, Fortune 1)
+tile.blockBreaker.3.2.name=Breaker (Diamond, Fortune 2)
+tile.blockBreaker.3.3.name=Breaker (Diamond, Fortune 3)
+tile.blockBreaker.3.s.name=Breaker (Diamond, Silk Touch)
+container.breaker=Breaker
+
+tile.autoCrafting.name=Automated Crafting Table
+container.autoCrafting=Automated Crafting Table
+
+tile.breeder.name=Feeding Trough
+container.breeder=Feeding Trough
+
+itemGroup.advanceddispenserstabs=Advanced Dispensers
