@@ -28,7 +28,6 @@ import net.minecraft.world.World;
 
 public class BlockBreaker extends BlockContainer
 {
-	//Test
 	private int tier, tickRate, fortune;
 	private double time;
 	private long timeCounter, last;
