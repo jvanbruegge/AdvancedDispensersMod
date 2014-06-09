@@ -1,5 +1,8 @@
 package com.supermanitu.advanceddispensers.main;
 
+import com.supermanitu.advanceddispensers.autocrafting.ContainerAutoCrafting;
+import com.supermanitu.advanceddispensers.autocrafting.GuiAutoCrafting;
+import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.breaker.ContainerBreaker;
 import com.supermanitu.advanceddispensers.breaker.GuiBreaker;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
@@ -27,6 +30,10 @@ public class GUIHandler implements IGuiHandler
 		{
 			return new ContainerPlacer(player.inventory, (TileEntityPlacer) tileentity);
 		}
+		else if(tileentity instanceof TileEntityAutoCrafting)
+		{
+			return new ContainerAutoCrafting(player.inventory, (TileEntityAutoCrafting) tileentity);
+		}
 		return null;
 	}
 
@@ -42,6 +49,10 @@ public class GUIHandler implements IGuiHandler
 		else if(tileentity instanceof TileEntityPlacer)
 		{
 			return new GuiPlacer(player.inventory, (TileEntityPlacer) tileentity);
+		}
+		else if(tileentity instanceof TileEntityAutoCrafting)
+		{
+			return new GuiAutoCrafting(player.inventory, (TileEntityAutoCrafting) tileentity);
 		}
 		return null;
 	}

@@ -9,7 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityAutoCrafting extends TileEntity implements IInventory
 {
-	private ItemStack[] inventory = new ItemStack[33];
+	private ItemStack[] inventory = new ItemStack[34];
 	private String invName;
 	
 	public TileEntityAutoCrafting()
@@ -20,7 +20,7 @@ public class TileEntityAutoCrafting extends TileEntity implements IInventory
 	@Override
 	public int getSizeInventory() 
 	{
-		return 33;
+		return 34;
 	}
 
 	@Override
