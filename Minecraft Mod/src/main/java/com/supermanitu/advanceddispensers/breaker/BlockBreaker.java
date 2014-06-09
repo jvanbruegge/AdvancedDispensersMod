@@ -29,8 +29,6 @@ import net.minecraft.world.World;
 public class BlockBreaker extends BlockContainer
 {
 	private int tier, tickRate, fortune;
-	private double time;
-	private long timeCounter, last;
 	private boolean silkTouch;
 	private BreakerTextureHelper textureHelper;
 	
@@ -41,8 +39,6 @@ public class BlockBreaker extends BlockContainer
 		this.setHardness(2f);
 		this.setStepSound(soundTypeStone);
 		this.setBlockName("blockBreaker");
-		
-		last = System.nanoTime();
 		
 		this.fortune = fortune;
 		this.silkTouch = silkTouch;

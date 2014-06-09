@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import com.supermanitu.advanceddispensers.autocrafting.BlockAutoCrafting;
+import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.breaker.BlockBreaker;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
 import com.supermanitu.advanceddispensers.placer.BlockPlacer;
@@ -46,6 +48,7 @@ public class AdvancedDispensersMod
 	//Blocks
 	public static BlockBreaker[] blockBreaker;
 	public static BlockPlacer blockPlacer;
+	public static BlockAutoCrafting blockAutoCrafting;
 	
 	//Items
 	
@@ -62,6 +65,7 @@ public class AdvancedDispensersMod
 		 config.load();
 		 int breakerTick = breakerConfig(config);
 		 int placerTick = placerConfig(config);
+		 int autoCraftingTick = autoCraftingConfig(config);
 		 
 		 //Initialization
 		 advancedDispensersTab = new AdvancedDispensersTab("advanceddispenserstabs");
@@ -104,6 +108,12 @@ public class AdvancedDispensersMod
 		 GameRegistry.registerTileEntity(TileEntityPlacer.class, "tileEntityPlacer");
 		 GameRegistry.addShapedRecipe(new ItemStack(blockPlacer, 1), blockPlacer.getRecipe());
 		 
+		 //Automated Crafting Table
+		 blockAutoCrafting = new BlockAutoCrafting(autoCraftingTick);
+		 GameRegistry.registerBlock(blockAutoCrafting, blockAutoCrafting.getUnlocalizedName().substring(5));
+		 GameRegistry.registerTileEntity(TileEntityAutoCrafting.class, "tileEntityAutoCrafting");
+		 GameRegistry.addShapedRecipe(new ItemStack(blockAutoCrafting, 1), blockAutoCrafting.getRecipe());
+		 
 		 config.save();
 	 }
 	 
@@ -129,6 +139,13 @@ public class AdvancedDispensersMod
 	 private int breakerConfig(Configuration config)
 	 {
 		 Property p = config.get(Configuration.CATEGORY_GENERAL, "breakerTick", 4);
+		 p.comment = "This value is the minimum delay between two activations (20 equals 1 time per second)";
+		 return p.getInt();
+	 }
+	 
+	 private int autoCraftingConfig(Configuration config)
+	 {
+		 Property p = config.get(Configuration.CATEGORY_GENERAL, "autoCraftingTick", 4);
 		 p.comment = "This value is the minimum delay between two activations (20 equals 1 time per second)";
 		 return p.getInt();
 	 }
