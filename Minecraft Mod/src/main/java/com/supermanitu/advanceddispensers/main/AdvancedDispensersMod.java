@@ -12,10 +12,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-
 import net.minecraftforge.common.config.Property;
+
 import com.supermanitu.advanceddispensers.breaker.BlockBreaker;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
+import com.supermanitu.advanceddispensers.placer.BlockPlacer;
+import com.supermanitu.advanceddispensers.placer.TileEntityPlacer;
 import com.supermanitu.advanceddispensers.proxies.CommonProxy;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -43,6 +45,7 @@ public class AdvancedDispensersMod
 	
 	//Blocks
 	public static BlockBreaker[] blockBreaker;
+	public static BlockPlacer blockPlacer;
 	
 	//Items
 	
@@ -58,6 +61,7 @@ public class AdvancedDispensersMod
 		 Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		 config.load();
 		 int breakerTick = breakerConfig(config);
+		 int placerTick = placerConfig(config);
 		 
 		 //Initialization
 		 advancedDispensersTab = new AdvancedDispensersTab("advanceddispenserstabs");
@@ -94,6 +98,12 @@ public class AdvancedDispensersMod
 			counter++;
 		 }
 		 
+		 //Placer
+		 blockPlacer = new BlockPlacer(placerTick);
+		 GameRegistry.registerBlock(blockPlacer, blockPlacer.getUnlocalizedName().substring(5));
+		 GameRegistry.registerTileEntity(TileEntityPlacer.class, "tileEntityPlacer");
+		 GameRegistry.addShapedRecipe(new ItemStack(blockPlacer, 1), blockPlacer.getRecipe());
+		 
 		 config.save();
 	 }
 	 
@@ -107,6 +117,13 @@ public class AdvancedDispensersMod
 	 public void postInit(FMLPostInitializationEvent event)
 	 {
 		 
+	 }
+	 
+	 private int placerConfig(Configuration config)
+	 {
+		 Property p = config.get(Configuration.CATEGORY_GENERAL, "placerTick", 4);
+		 p.comment = "This value is the minimum delay between two activations (20 equals 1 time per second)";
+		 return p.getInt();
 	 }
 	 
 	 private int breakerConfig(Configuration config)
@@ -125,7 +142,7 @@ public class AdvancedDispensersMod
 		 } 
 		 catch (MalformedURLException e) 
 		 {
-			 System.err.println("Error: Fehler bei der Versionsprüfung:");
+			 System.err.println("Error: Fehler bei der Versionsprï¿½fung:");
 			 e.printStackTrace();
 			 return true;
 		 }
@@ -153,7 +170,7 @@ public class AdvancedDispensersMod
 		 } 
 		 catch (IOException e) 
 		 {
-			 System.out.println("Error: Fehler beim Schließen der Verbindung zum Internet:");
+			 System.out.println("Error: Fehler beim Schlieï¿½en der Verbindung zum Internet:");
 			 e.printStackTrace();
 			 return true;
 		 }
@@ -165,7 +182,7 @@ public class AdvancedDispensersMod
 		 }
 		 catch (IOException e)
 		 {
-			 System.out.println("Error: Fehler beim Schließen der Verbindung zum Internet:");
+			 System.out.println("Error: Fehler beim Schlieï¿½en der Verbindung zum Internet:");
 			 e.printStackTrace();
 			 return true;
 		 }
