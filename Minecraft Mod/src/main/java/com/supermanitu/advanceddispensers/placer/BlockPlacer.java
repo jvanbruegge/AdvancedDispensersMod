@@ -160,6 +160,41 @@ public class BlockPlacer extends BlockContainer
 	{
 		TileEntityPlacer tileEntity = (TileEntityPlacer) world.getTileEntity(x, y, z);
 		int slot = getFirstSlot(tileEntity);
+		int meta = world.getBlockMetadata(x, y, z);
+		
+		int i = getI(meta);
+		int j = getJ(meta);
+		int k = getK(meta);
+		Block block = null;
+		
+		if(world.getBlock(i, j, k).equals(Blocks.air))
+		{
+			world.setBlock(i, j, k, block);
+			
+			tileEntity.getStackInSlot(slot).stackSize--;
+			if(tileEntity.getStackInSlot(slot).stackSize == 0) tileEntity.setInventorySlotContents(slot, null);
+		}
+	}
+	
+	private int getI(int meta)
+	{
+		switch(meta)
+		{
+		case 2: return 1;
+		case 3: return -1;
+		
+		default: return 0;
+		}
+	}
+	
+	private int getJ(int meta)
+	{
+		
+	}
+	
+	private int getK(int meta)
+	{
+		
 	}
 	
 	private int getFirstSlot(TileEntityPlacer tileEntityPlacer) 
@@ -169,7 +204,10 @@ public class BlockPlacer extends BlockContainer
 		{
 			if(tileEntityPlacer.getStackInSlot(i) != null && tileEntityPlacer.getStackInSlot(i).stackSize != 0)
 			{
-				return i;
+				if(Block.getBlockFromItem(tileEntityPlacer.getStackInSlot(i).getItem()) != null)
+				{
+					return i;
+				}
 			}
 		}
 		return slot;
