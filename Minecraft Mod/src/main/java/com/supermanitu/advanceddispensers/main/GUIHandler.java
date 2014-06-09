@@ -3,6 +3,9 @@ package com.supermanitu.advanceddispensers.main;
 import com.supermanitu.advanceddispensers.breaker.ContainerBreaker;
 import com.supermanitu.advanceddispensers.breaker.GuiBreaker;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
+import com.supermanitu.advanceddispensers.placer.ContainerPlacer;
+import com.supermanitu.advanceddispensers.placer.GuiPlacer;
+import com.supermanitu.advanceddispensers.placer.TileEntityPlacer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -20,7 +23,10 @@ public class GUIHandler implements IGuiHandler
 		{
 			return new ContainerBreaker(player.inventory, (TileEntityBreaker) tileentity);
 		}
-		
+		else if(tileentity instanceof TileEntityPlacer)
+		{
+			return new ContainerPlacer(player.inventory, (TileEntityPlacer) tileentity);
+		}
 		return null;
 	}
 
@@ -33,7 +39,10 @@ public class GUIHandler implements IGuiHandler
 		{
 			return new GuiBreaker(player.inventory, (TileEntityBreaker) tileentity);
 		}
-		
+		else if(tileentity instanceof TileEntityPlacer)
+		{
+			return new GuiPlacer(player.inventory, (TileEntityPlacer) tileentity);
+		}
 		return null;
 	}
 }

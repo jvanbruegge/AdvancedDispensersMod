@@ -1,4 +1,4 @@
-tile.placer.name=Blocksetzer
+tile.blockPlacer.name=Blocksetzer
 container.placer=Blocksetzer
 
 tile.blockBreaker.2.name=Abreisser (Eisen)

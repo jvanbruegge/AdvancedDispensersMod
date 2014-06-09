@@ -1,4 +1,4 @@
-tile.placer.name=Placer
+tile.blockPlacer.name=Placer
 container.placer=Placer
 
 tile.blockBreaker.2.name=Breaker (Iron)

@@ -17,8 +17,7 @@ public class AdvancedDispensersTab extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() 
 	{
-		//TODO Placer-Icon
-		return Item.getItemFromBlock(Blocks.bedrock);
+		return Item.getItemFromBlock(AdvancedDispensersMod.blockPlacer);
 	}
 
 }
