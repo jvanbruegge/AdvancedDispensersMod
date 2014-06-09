@@ -41,6 +41,9 @@ public class PlacerTextureHelper
 		case 0: return getDown(side);
 		case 1: return getUp(side);
 		
+		case 8: return getDown(side);
+		case 9: return getUp(side);
+		
 		default: return getSide(side, metadata);
 		}
 	}
@@ -55,7 +58,7 @@ public class PlacerTextureHelper
 		case 1: return textureTop;
 		}
 		
-		if(side == metadata)
+		if(side == metadata || side == metadata - 8)
 		{
 			ret = textureFront;
 		}
