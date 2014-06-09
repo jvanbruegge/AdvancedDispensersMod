@@ -158,9 +158,23 @@ public class BlockPlacer extends BlockContainer
 	
 	private void placeBlockInFront(World world, int x, int y, int z)
 	{
-		
+		TileEntityPlacer tileEntity = (TileEntityPlacer) world.getTileEntity(x, y, z);
+		int slot = getFirstSlot(tileEntity);
 	}
 	
+	private int getFirstSlot(TileEntityPlacer tileEntityPlacer) 
+	{
+		int slot = -1;
+		for(int i = 0; i < 9; i++)
+		{
+			if(tileEntityPlacer.getStackInSlot(i) != null && tileEntityPlacer.getStackInSlot(i).stackSize != 0)
+			{
+				return i;
+			}
+		}
+		return slot;
+	}
+
 	private void setDefaultDirection(World world, int x, int y, int z, EntityLivingBase livingBase)
 	{
 		int l = BlockPistonBase.determineOrientation(world, x, y, z, livingBase);

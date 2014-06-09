@@ -3,6 +3,7 @@ package com.supermanitu.advanceddispensers.main;
 import org.lwjgl.opengl.GL11;
 
 import com.supermanitu.advanceddispensers.breaker.BlockBreaker;
+import com.supermanitu.advanceddispensers.placer.BlockPlacer;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -15,31 +16,36 @@ public class BlockRenderer implements ISimpleBlockRenderingHandler
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) 
 	{
+		int meta = 0;
+		
+		if(block instanceof BlockBreaker) meta = 1;
+		else if(block instanceof BlockPlacer) meta = 5;
+		
 		Tessellator tessellator = Tessellator.instance;
 		GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, -1.0F, 0.0F);
-		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, 1));
+		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, meta));
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 1.0F, 0.0F);
-		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, 1));
+		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, meta));
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, -1.0F);
-		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, 1));
+		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, meta));
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, 1.0F);
-		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, 1));
+		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, meta));
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, 1));
+		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, meta));
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(1.0F, 0.0F, 0.0F);
-		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, 1));
+		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, meta));
 		tessellator.draw();
 		GL11.glTranslatef(0.5f, 0.5f, 0.5f);
 	}
