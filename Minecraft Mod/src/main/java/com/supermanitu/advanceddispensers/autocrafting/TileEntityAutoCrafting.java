@@ -2,12 +2,13 @@ package com.supermanitu.advanceddispensers.autocrafting;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityAutoCrafting extends TileEntity implements IInventory
+public class TileEntityAutoCrafting extends TileEntity implements ISidedInventory
 {
 	private ItemStack[] inventory = new ItemStack[34];
 	private String invName;
@@ -20,7 +21,7 @@ public class TileEntityAutoCrafting extends TileEntity implements IInventory
 	@Override
 	public int getSizeInventory() 
 	{
-		return 34;
+		return inventory.length;
 	}
 
 	@Override
@@ -174,4 +175,26 @@ public class TileEntityAutoCrafting extends TileEntity implements IInventory
             tagCompound.setString("CustomName", this.invName);
         }
     }
+
+	
+	@Override
+	public int[] getAccessibleSlotsFromSide(int side)
+	{
+		return new int[]{10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33};
+	}
+	
+
+	@Override
+	public boolean canInsertItem(int slot, ItemStack stack, int side) 
+	{
+		if(slot > 9 && slot < 25) return true;
+		return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int slot, ItemStack stack, int side)
+	{
+		if(slot > 24) return true;
+		return false;
+	}
 }

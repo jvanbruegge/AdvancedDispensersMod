@@ -2,6 +2,7 @@ package com.supermanitu.advanceddispensers.autocrafting;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -66,10 +67,32 @@ public class ContainerAutoCrafting extends Container
     {
         return this.tileEntityAutoCrafting.isUseableByPlayer(par1EntityPlayer);
     }
+    
+    @Override
+    public void detectAndSendChanges()
+    {
+    	for (int i = 0; i < this.inventorySlots.size(); ++i)
+        {
+            ItemStack itemstack = ((Slot)this.inventorySlots.get(i)).getStack();
+            ItemStack itemstack1 = (ItemStack)this.inventoryItemStacks.get(i);
+
+            if (!ItemStack.areItemStacksEqual(itemstack1, itemstack))
+            {
+                itemstack1 = itemstack == null ? null : itemstack.copy();
+                this.inventoryItemStacks.set(i, itemstack1);
+
+                for (int j = 0; j < this.crafters.size(); ++j)
+                {
+                    ((ICrafting)this.crafters.get(j)).sendSlotContents(this, i, itemstack1);
+                }
+            }
+        }
+    }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
     {
         ItemStack itemstack = null;
