@@ -9,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 public class GuiAutoCrafting extends GuiContainer
 {
@@ -16,9 +17,9 @@ public class GuiAutoCrafting extends GuiContainer
     public TileEntityAutoCrafting tileEntityAutoCrafting;
     private static final String __OBFID = "CL_00000765";
 
-    public GuiAutoCrafting(InventoryPlayer inventoryPlayer, TileEntityAutoCrafting tileEntityAutoCrafting)
+    public GuiAutoCrafting(InventoryPlayer inventoryPlayer, TileEntityAutoCrafting tileEntityAutoCrafting, World world)
     {
-        super(new ContainerAutoCrafting(inventoryPlayer, tileEntityAutoCrafting));
+        super(new ContainerAutoCrafting(inventoryPlayer, tileEntityAutoCrafting, world));
         this.tileEntityAutoCrafting = tileEntityAutoCrafting;
         this.xSize = 176;
         this.ySize = 234;

@@ -32,7 +32,7 @@ public class GUIHandler implements IGuiHandler
 		}
 		else if(tileentity instanceof TileEntityAutoCrafting)
 		{
-			return new ContainerAutoCrafting(player.inventory, (TileEntityAutoCrafting) tileentity);
+			return new ContainerAutoCrafting(player.inventory, (TileEntityAutoCrafting) tileentity, world);
 		}
 		return null;
 	}
@@ -52,7 +52,7 @@ public class GUIHandler implements IGuiHandler
 		}
 		else if(tileentity instanceof TileEntityAutoCrafting)
 		{
-			return new GuiAutoCrafting(player.inventory, (TileEntityAutoCrafting) tileentity);
+			return new GuiAutoCrafting(player.inventory, (TileEntityAutoCrafting) tileentity, world);
 		}
 		return null;
 	}
