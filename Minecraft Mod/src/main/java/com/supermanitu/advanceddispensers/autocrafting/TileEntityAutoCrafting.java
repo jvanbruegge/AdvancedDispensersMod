@@ -14,7 +14,7 @@ public class TileEntityAutoCrafting extends TileEntity implements IInventory
 	
 	public TileEntityAutoCrafting()
 	{
-		this.invName = "container.placer";
+		this.invName = "container.autoCrafting";
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class ContainerAutoCrafting extends Container
             }
         }
         
-        this.addSlotToContainer(new Slot(tileEntityAutoCrafting, counter, 123, 34));
+        this.addSlotToContainer(new Slot(tileEntityAutoCrafting, counter, 124, 35));
         counter++;
         
         for(int i = 0; i < 3; i++)

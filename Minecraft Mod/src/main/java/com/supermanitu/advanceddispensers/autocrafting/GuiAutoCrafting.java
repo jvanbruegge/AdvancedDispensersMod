@@ -32,6 +32,8 @@ public class GuiAutoCrafting extends GuiContainer
         String s = this.tileEntityAutoCrafting.hasCustomInventoryName() ? I18n.format(this.tileEntityAutoCrafting.getInventoryName(), new Object[0]) :  I18n.format("container.dispenser", new Object[0]);
         this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 91, 4210752);
+        this.fontRendererObj.drawString(I18n.format("autocrafting.input", new Object[0]), 8, 79, 4210752);
+        this.fontRendererObj.drawString(I18n.format("autocrafting.output", new Object[0]), 116, 79, 4210752);
     }
 
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_)
