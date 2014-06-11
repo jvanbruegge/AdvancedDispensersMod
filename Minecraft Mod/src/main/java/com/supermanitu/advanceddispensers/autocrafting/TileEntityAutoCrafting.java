@@ -87,8 +87,6 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
         {
             stack.stackSize = this.getInventoryStackLimit();
         }
-        
-        //System.out.println("Slot: "+ slot + " " + inventory[slot]);
 
         this.markDirty();
 	}

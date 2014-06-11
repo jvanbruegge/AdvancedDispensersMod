@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class ContainerAutoCrafting extends Container
 {
 	private TileEntityAutoCrafting tileEntityAutoCrafting;
-	private InventoryCrafting crafting = new InventoryCrafting(this, 3, 3);
+	private InventoryAutoCrafting crafting;
 	private InventoryCraftResult result = new InventoryCraftResult();
 	private World worldObj;
 	private static final String __OBFID = "CL_00001763";
@@ -26,21 +26,21 @@ public class ContainerAutoCrafting extends Container
 	{
 		this.tileEntityAutoCrafting = tileEntityAutoCrafting;
 		this.worldObj = world;
+		
+		this.crafting = new InventoryAutoCrafting(tileEntityAutoCrafting, this, 3, 3);
 
 		int counter = 0;
-
-		for (int i = 0; i < 3; ++i)
+		
+		for (int i = 0; i < 3; i++)
 		{
-			for (int j = 0; j < 3; ++j)
-			{
-				System.out.print(tileEntityAutoCrafting.getStackInSlot(i*3 + j) + " ");
+			for (int j = 0; j < 3; j++)
+			{	
 				this.addSlotToContainer(new Slot(crafting, i*3 + j, 30 + j * 18, 17 + i * 18));
-				crafting.setInventorySlotContents(i*3 + j, tileEntityAutoCrafting.getStackInSlot(i*3 + j));
 				counter++;
 			}
-			System.out.print("\n");
 		}
-		System.out.print("\n");
+		
+		System.out.println();
 
 		this.addSlotToContainer(new SlotAutoCrafting(crafting, result, counter, 124, 35));
 		counter++;
@@ -89,18 +89,6 @@ public class ContainerAutoCrafting extends Container
 	{
 		super.onCraftMatrixChanged(par1IInventory);
 		
-		for(int i = 0; i < 3; i++)
-		{
-			for(int j = 0; j < 3; j++)
-			{
-				if(crafting.getStackInSlot(i*3 + j) == null) tileEntityAutoCrafting.setInventorySlotContents(i*3 + j, null);
-				else tileEntityAutoCrafting.setInventorySlotContents(i*3 + j, crafting.getStackInSlot(i*3 + j).copy());
-				//System.out.print(tileEntityAutoCrafting.getStackInSlot(i*3 + j) +  " ");
-			}
-			//System.out.print("\n");
-		}
-		//System.out.print("\n");
-
 		this.result.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.crafting, this.worldObj));
 
 		if(result.getStackInSlot(0) == null) tileEntityAutoCrafting.setInventorySlotContents(9, null);
