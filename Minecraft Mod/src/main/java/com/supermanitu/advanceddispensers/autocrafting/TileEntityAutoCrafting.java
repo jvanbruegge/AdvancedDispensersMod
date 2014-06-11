@@ -138,13 +138,10 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
         {
             NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
             int j = nbttagcompound1.getByte("Slot") & 255;
-
-            System.out.println(j);
             
             if (j >= 0 && j < this.inventory.length)
             {
                 this.inventory[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-                System.out.println("Slot : " + j + " " + inventory[j]);
             }
         }
 

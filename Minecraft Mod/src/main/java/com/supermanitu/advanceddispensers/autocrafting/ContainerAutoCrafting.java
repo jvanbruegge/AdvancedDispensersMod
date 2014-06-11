@@ -18,7 +18,7 @@ public class ContainerAutoCrafting extends Container
 {
 	private TileEntityAutoCrafting tileEntityAutoCrafting;
 	private InventoryAutoCrafting crafting;
-	private InventoryCraftResult result = new InventoryCraftResult();
+	private InventoryAutoCraftResult result;
 	private World worldObj;
 	private static final String __OBFID = "CL_00001763";
 
@@ -28,6 +28,7 @@ public class ContainerAutoCrafting extends Container
 		this.worldObj = world;
 		
 		this.crafting = new InventoryAutoCrafting(tileEntityAutoCrafting, this, 3, 3);
+		this.result = new InventoryAutoCraftResult(tileEntityAutoCrafting);
 
 		int counter = 0;
 		
@@ -90,9 +91,6 @@ public class ContainerAutoCrafting extends Container
 		super.onCraftMatrixChanged(par1IInventory);
 		
 		this.result.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.crafting, this.worldObj));
-
-		if(result.getStackInSlot(0) == null) tileEntityAutoCrafting.setInventorySlotContents(9, null);
-		else tileEntityAutoCrafting.setInventorySlotContents(9, result.getStackInSlot(0).copy());
 	}
 
 	/**
