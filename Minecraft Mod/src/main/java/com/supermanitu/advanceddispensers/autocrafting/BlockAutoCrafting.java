@@ -124,7 +124,8 @@ public class BlockAutoCrafting extends BlockContainer
 	{
 		if(!world.isRemote)
 		{
-			//TODO crafting
+			TileEntityAutoCrafting tileEntity = (TileEntityAutoCrafting) world.getTileEntity(x, y, z);
+			tileEntity.craft();
 		}
 	}
 

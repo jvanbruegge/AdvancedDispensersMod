@@ -40,8 +40,6 @@ public class ContainerAutoCrafting extends Container
 				counter++;
 			}
 		}
-		
-		System.out.println();
 
 		this.addSlotToContainer(new SlotAutoCrafting(crafting, result, counter, 124, 35));
 		counter++;
