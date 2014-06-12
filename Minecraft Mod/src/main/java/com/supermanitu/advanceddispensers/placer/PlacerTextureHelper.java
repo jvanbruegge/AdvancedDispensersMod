@@ -8,7 +8,6 @@ import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public class PlacerTextureHelper 
 {
 	@SideOnly(Side.CLIENT)

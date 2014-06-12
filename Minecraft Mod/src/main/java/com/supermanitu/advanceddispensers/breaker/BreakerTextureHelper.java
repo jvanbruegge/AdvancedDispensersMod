@@ -7,7 +7,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
-@SideOnly(Side.CLIENT)
 public class BreakerTextureHelper 
 {
 	private int tier;
