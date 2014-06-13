@@ -69,7 +69,6 @@ public class BlockAutoCrafting extends BlockContainer
 		}
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
     {
@@ -80,7 +79,7 @@ public class BlockAutoCrafting extends BlockContainer
         else
         {
         	TileEntity tileentity = world.getTileEntity(x, y, z);
-
+        	
             if (tileentity != null && !player.isSneaking())
             {
             	player.openGui(AdvancedDispensersMod.instance, 0, world, x, y, z);
