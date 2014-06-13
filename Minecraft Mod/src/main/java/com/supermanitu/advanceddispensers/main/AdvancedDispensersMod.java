@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.lang3.BooleanUtils;
+
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -14,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import com.supermanitu.advanceddispensers.adjustablerepeater.BlockAdjustableRepeater;
+import com.supermanitu.advanceddispensers.adjustablerepeater.TileEntityAdjustableRepeater;
 import com.supermanitu.advanceddispensers.autocrafting.BlockAutoCrafting;
 import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.breaker.BlockBreaker;
@@ -52,6 +56,7 @@ public class AdvancedDispensersMod
 	public static BlockPlacer blockPlacer;
 	public static BlockAutoCrafting blockAutoCrafting;
 	public static BlockBreeder blockBreeder;
+	public static BlockAdjustableRepeater[]  adjustableRepeater;
 	
 	//Items
 	
@@ -91,7 +96,6 @@ public class AdvancedDispensersMod
 			 {
 				 blockBreaker[counter] = new BlockBreaker(i+2, j, false, breakerTick);
 				 GameRegistry.registerBlock(blockBreaker[counter], blockBreaker[counter].getUnlocalizedName().substring(5));
-				 GameRegistry.registerTileEntity(TileEntityBreaker.class, "tileEntityBreaker" + counter);
 				 GameRegistry.addShapedRecipe(new ItemStack(blockBreaker[counter], 1), blockBreaker[counter].getRecipe());
 				 counter++;
 			 }
@@ -100,10 +104,10 @@ public class AdvancedDispensersMod
 		 {
 			blockBreaker[counter] = new BlockBreaker(i+2, 0, true, breakerTick);
 			GameRegistry.registerBlock(blockBreaker[counter], blockBreaker[counter].getUnlocalizedName().substring(5));
-			GameRegistry.registerTileEntity(TileEntityBreaker.class, "tileEntityBreaker" + counter);
 			GameRegistry.addShapedRecipe(new ItemStack(blockBreaker[counter], 1), blockBreaker[counter].getRecipe());
 			counter++;
 		 }
+		 GameRegistry.registerTileEntity(TileEntityBreaker.class, "tileEntityBreaker");
 		 
 		 //Placer
 		 blockPlacer = new BlockPlacer(placerTick);
@@ -122,6 +126,16 @@ public class AdvancedDispensersMod
 		 GameRegistry.registerBlock(blockBreeder, blockBreeder.getUnlocalizedName().substring(5));
 		 GameRegistry.registerTileEntity(TileEntityBreeder.class, "tileEntityBreeder");
 		 GameRegistry.addShapedRecipe(new ItemStack(blockBreeder, 1), blockBreeder.getRecipe());
+		 
+		 //Repeater
+		 adjustableRepeater = new BlockAdjustableRepeater[2];
+		 for(int i = 0; i < 2; i++)
+		 {
+			 adjustableRepeater[i] = new BlockAdjustableRepeater(BooleanUtils.toBoolean(i));
+			 GameRegistry.registerBlock(adjustableRepeater[i], adjustableRepeater[i].getUnlocalizedName().substring(5));
+			 GameRegistry.addShapelessRecipe(new ItemStack(adjustableRepeater[i], 1), adjustableRepeater[i].getRecipe());
+		 }
+		 GameRegistry.registerTileEntity(TileEntityAdjustableRepeater.class, "tileEntityAdjustableRepeater");
 		 
 		 config.save();
 	 }
