@@ -18,6 +18,8 @@ import com.supermanitu.advanceddispensers.autocrafting.BlockAutoCrafting;
 import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.breaker.BlockBreaker;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
+import com.supermanitu.advanceddispensers.breeder.BlockBreeder;
+import com.supermanitu.advanceddispensers.breeder.TileEntityBreeder;
 import com.supermanitu.advanceddispensers.placer.BlockPlacer;
 import com.supermanitu.advanceddispensers.placer.TileEntityPlacer;
 import com.supermanitu.advanceddispensers.proxies.CommonProxy;
@@ -37,7 +39,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class AdvancedDispensersMod 
 {
 	public static final String MODID = "advanceddispensers";
-	public static final String VERSION = "1.2.0-b3";
+	public static final String VERSION = "1.2.0-b4";
 	
 	@Instance("advanceddispensers")
     public static AdvancedDispensersMod instance;
@@ -49,6 +51,7 @@ public class AdvancedDispensersMod
 	public static BlockBreaker[] blockBreaker;
 	public static BlockPlacer blockPlacer;
 	public static BlockAutoCrafting blockAutoCrafting;
+	public static BlockBreeder blockBreeder;
 	
 	//Items
 	
@@ -113,6 +116,12 @@ public class AdvancedDispensersMod
 		 GameRegistry.registerBlock(blockAutoCrafting, blockAutoCrafting.getUnlocalizedName().substring(5));
 		 GameRegistry.registerTileEntity(TileEntityAutoCrafting.class, "tileEntityAutoCrafting");
 		 GameRegistry.addShapedRecipe(new ItemStack(blockAutoCrafting, 1), blockAutoCrafting.getRecipe());
+		 
+		 //Breeder
+		 blockBreeder = new BlockBreeder();
+		 GameRegistry.registerBlock(blockBreeder, blockBreeder.getUnlocalizedName().substring(5));
+		 GameRegistry.registerTileEntity(TileEntityBreeder.class, "tileEntityBreeder");
+		 GameRegistry.addShapedRecipe(new ItemStack(blockBreeder, 1), blockBreeder.getRecipe());
 		 
 		 config.save();
 	 }

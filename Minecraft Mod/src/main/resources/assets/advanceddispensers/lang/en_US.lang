@@ -20,7 +20,7 @@ container.autoCrafting=Automated Crafting Table
 autocrafting.input=Input
 autocrafting.output=Output
 
-tile.breeder.name=Feeding Trough
+tile.blockBreeder.name=Feeding Trough
 container.breeder=Feeding Trough
 
 itemGroup.advanceddispenserstabs=Advanced Dispensers
