@@ -24,6 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 
 public class BlockPlacer extends BlockContainer
 {
@@ -208,17 +209,28 @@ public class BlockPlacer extends BlockContainer
 	private void placeBlockInFront(World world, int x, int y, int z)
 	{
 		TileEntityPlacer tileEntity = (TileEntityPlacer) world.getTileEntity(x, y, z);
-		int slot = getFirstSlot(tileEntity);
 		int meta = world.getBlockMetadata(x, y, z);
-		
-		if(slot == -1) return;
 		
 		int i = getI(meta, x);
 		int j = getJ(meta, y);
 		int k = getK(meta, z);
-		Block block = Block.getBlockFromItem(tileEntity.getStackInSlot(slot).getItem());
 		
-		if(world.getBlock(i, j, k).equals(Blocks.air))
+		int slot = getFirstSlot(tileEntity, world, i, j, k);
+		
+		if(slot == -1) return;
+		
+		Block block = null;
+		
+		if(tileEntity.getStackInSlot(slot).getItem() instanceof IPlantable)
+		{
+			block = ((IPlantable) tileEntity.getStackInSlot(slot).getItem()).getPlant(world, i, j, k);
+		}
+		else
+		{
+			block = Block.getBlockFromItem(tileEntity.getStackInSlot(slot).getItem());
+		}
+		
+		if(world.getBlock(i, j, k).equals(Blocks.air) && block != null)
 		{
 			world.setBlock(i, j, k, block);
 			
@@ -260,7 +272,7 @@ public class BlockPlacer extends BlockContainer
 		}
 	}
 	
-	private int getFirstSlot(TileEntityPlacer tileEntityPlacer) 
+	private int getFirstSlot(TileEntityPlacer tileEntityPlacer, World world, int x, int y, int z) 
 	{
 		int slot = -1;
 		for(int i = 0; i < 9; i++)
@@ -268,6 +280,10 @@ public class BlockPlacer extends BlockContainer
 			if(tileEntityPlacer.getStackInSlot(i) != null && tileEntityPlacer.getStackInSlot(i).stackSize != 0)
 			{
 				if(Block.getBlockFromItem(tileEntityPlacer.getStackInSlot(i).getItem()) != null)
+				{
+					return i;
+				}
+				if(tileEntityPlacer.getStackInSlot(i).getItem() instanceof IPlantable && world.getBlock(x, y-1, z).equals(Blocks.farmland))
 				{
 					return i;
 				}
