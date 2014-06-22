@@ -152,7 +152,7 @@ public class BlockPlacer extends BlockContainer
 	
 	public Object[] getRecipe()
 	{
-		return new Object[]{"XCX", "CSC", "XFX", 'X', Items.iron_ingot, 'C', Items.redstone, 'S', Blocks.crafting_table, 'F', Blocks.piston};
+		return new Object[]{"XCX", "CSC", "FCF", 'X', Blocks.planks, 'C', Items.redstone, 'S', Blocks.dispenser, 'F', Blocks.stone};
 	}
 	
 	private void placeBlockInFront(World world, int x, int y, int z)
