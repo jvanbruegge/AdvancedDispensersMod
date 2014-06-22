@@ -2,6 +2,7 @@ package com.supermanitu.advanceddispensers.placer;
 
 import java.util.Random;
 
+import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.main.AdvancedDispensersMod;
 
 import cpw.mods.fml.relauncher.Side;
@@ -12,12 +13,14 @@ import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -27,6 +30,7 @@ public class BlockPlacer extends BlockContainer
 	private int tickRate;
 	
 	private PlacerTextureHelper textureHelper;
+	private Random rand = new Random();
 	
 	public BlockPlacer(int tickRate) 
 	{
@@ -90,6 +94,52 @@ public class BlockPlacer extends BlockContainer
 
             return true;
         }
+    }
+	
+	public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
+    {
+        TileEntityPlacer tileEntityPlacer = (TileEntityPlacer)world.getTileEntity(x, y, z);
+
+        if (tileEntityPlacer != null)
+        {
+            for (int i1 = 0; i1 < tileEntityPlacer.getSizeInventory(); ++i1)
+            {
+                ItemStack itemstack = tileEntityPlacer.getStackInSlot(i1);
+
+                if (itemstack != null)
+                {
+                    float f = this.rand.nextFloat() * 0.8F + 0.1F;
+                    float f1 = this.rand.nextFloat() * 0.8F + 0.1F;
+                    EntityItem entityitem;
+
+                    for (float f2 = this.rand.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; world.spawnEntityInWorld(entityitem))
+                    {
+                        int j1 = this.rand.nextInt(21) + 10;
+
+                        if (j1 > itemstack.stackSize)
+                        {
+                            j1 = itemstack.stackSize;
+                        }
+
+                        itemstack.stackSize -= j1;
+                        entityitem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
+                        float f3 = 0.05F;
+                        entityitem.motionX = (double)((float)this.rand.nextGaussian() * f3);
+                        entityitem.motionY = (double)((float)this.rand.nextGaussian() * f3 + 0.2F);
+                        entityitem.motionZ = (double)((float)this.rand.nextGaussian() * f3);
+
+                        if (itemstack.hasTagCompound())
+                        {
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+                        }
+                    }
+                }
+            }
+
+            world.func_147453_f(x, y, z, block);
+        }
+
+        super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
 	
 	@Override

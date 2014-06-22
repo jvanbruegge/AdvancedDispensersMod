@@ -122,13 +122,13 @@ public class AdvancedDispensersMod
 		 GameRegistry.addShapedRecipe(new ItemStack(blockAutoCrafting, 1), blockAutoCrafting.getRecipe());
 		 
 		 //Breeder
-		 blockBreeder = new BlockBreeder();
+		 /*blockBreeder = new BlockBreeder();
 		 GameRegistry.registerBlock(blockBreeder, blockBreeder.getUnlocalizedName().substring(5));
 		 GameRegistry.registerTileEntity(TileEntityBreeder.class, "tileEntityBreeder");
-		 GameRegistry.addShapedRecipe(new ItemStack(blockBreeder, 1), blockBreeder.getRecipe());
+		 GameRegistry.addShapedRecipe(new ItemStack(blockBreeder, 1), blockBreeder.getRecipe());*/
 		 
 		 //Repeater
-		 adjustableRepeater = new BlockAdjustableRepeater[2];
+		 /*adjustableRepeater = new BlockAdjustableRepeater[2];
 		 for(int i = 0; i < 2; i++)
 		 {
 			 adjustableRepeater[i] = new BlockAdjustableRepeater(BooleanUtils.toBoolean(i));
@@ -136,7 +136,7 @@ public class AdvancedDispensersMod
 			 GameRegistry.addShapelessRecipe(new ItemStack(adjustableRepeater[i], 1), adjustableRepeater[i].getRecipe());
 		 }
 		 GameRegistry.registerTileEntity(TileEntityAdjustableRepeater.class, "tileEntityAdjustableRepeater");
-		 
+		 */
 		 config.save();
 	 }
 	 
