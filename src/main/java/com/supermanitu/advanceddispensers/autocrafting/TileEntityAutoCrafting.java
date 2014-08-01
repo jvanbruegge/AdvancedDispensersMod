@@ -222,6 +222,57 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
 	{
 		ItemStack stack = inventory[9].copy();
 		
+		if(containsItem(stack))
+		{
+			putStack(stack);
+		}
+		else
+		{
+			putInEmptySlot(stack);
+		}
+	}
+	
+	private void putStack(ItemStack stack)
+	{
+		int cp = stack.stackSize;
+		
+		for(int i = 25; i < 34; i++)
+		{
+			if(inventory[i] != null && inventory[i].getItem().equals(stack.getItem()) && inventory[i].getItemDamage() == stack.getItemDamage() && inventory[i].stackSize <= inventory[i].getMaxStackSize() - stack.stackSize)
+			{
+				inventory[i].stackSize += stack.stackSize;
+				return;
+			}
+			else if(inventory[i] != null && inventory[i].stackSize < inventory[i].getMaxStackSize() && inventory[i].getItem().equals(stack.getItem()) && inventory[i].getItemDamage() == stack.getItemDamage())
+			{
+				for(int j = 0; j < cp; j++)
+				{
+					if(inventory[i].stackSize == inventory[i].getMaxStackSize())
+					{
+						if(containsItem(stack))
+						{
+							System.out.println("putStack: " + stack.stackSize);
+							putStack(stack);
+						}
+						else
+						{
+							System.out.println("putInEmptySlot: " + stack.stackSize);
+							putInEmptySlot(stack);
+						}
+						return;
+					}
+					if(stack.stackSize == 0) return;
+					stack.stackSize--;
+					inventory[i].stackSize++;
+					System.out.println("Stack.stacksize: " + stack.stackSize);
+				}
+			}
+		}
+	}
+	
+	private void putInEmptySlot(ItemStack stack) 
+	{
+		System.out.println("Stack.Stacksize: " + stack.stackSize);
 		for(int i = 25; i < 34; i++)
 		{
 			if(inventory[i] == null)
@@ -229,28 +280,21 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
 				inventory[i] = stack;
 				return;
 			}
-			else if(inventory[i].getItem().equals(inventory[9].getItem().equals(inventory[i].getItem()) && inventory[i].stackSize <= inventory[i].getItem().getItemStackLimit(inventory[i]) - inventory[9].stackSize))
-			{
-				inventory[i].stackSize += stack.stackSize;
-				return;
-			}
-			else if(inventory[i].getItem().equals(stack.getItem()))
-			{
-				for(int j = 0; j < stack.stackSize; j++)
-				{
-					if(inventory[i].stackSize == inventory[i].getItem().getItemStackLimit(inventory[i])) break;
-					if(stack.stackSize == 0) return;
-					stack.stackSize--;
-					inventory[i].stackSize++;
-				}
-			}
-			if(stack == null || stack.stackSize == 0)
-			{
-				return;
-			}
 		}
 	}
-	
+
+	private boolean containsItem(ItemStack stack)
+	{
+		for(int i = 25; i < 34; i++)
+		{
+			if(inventory[i] != null && inventory[i].stackSize < inventory[i].getMaxStackSize() && inventory[i].getItem().equals(stack.getItem()) && inventory[i].getItemDamage() == stack.getItemDamage())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void decreaseInputStacks()
 	{
 		HashMap<Item, Integer> materials = new HashMap<Item, Integer>();
@@ -311,15 +355,15 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
 	{
 		ItemStack stack = inventory[9].copy();
 		
-		for(int i = 25; i < 34; i++)
+		for(int i = 25; i < 34; i++) //Output field
 		{
-			if(inventory[i] == null || (inventory[i].getItem().equals(inventory[9].getItem().equals(inventory[i].getItem()) && inventory[i].stackSize <= inventory[i].getItem().getItemStackLimit(inventory[i]) - inventory[9].stackSize)))
+			if(inventory[i] == null || (inventory[i].getItem().equals(stack.getItem()) && inventory[i].getItemDamage() == stack.getItemDamage() && inventory[i].stackSize <= inventory[i].getMaxStackSize() - stack.stackSize))
 			{
 				return true;
 			}
 			else if(inventory[i].getItem().equals(stack.getItem()))
 			{
-				stack.stackSize -= inventory[i].getItem().getItemStackLimit(inventory[i]) - inventory[i].stackSize;
+				stack.stackSize -= inventory[i].getMaxStackSize() - inventory[i].stackSize;
 			}
 			if(stack == null || stack.stackSize <= 0)
 			{
