@@ -331,40 +331,40 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
 	
 	private boolean enoughForRecipe()
 	{
-		HashMap<Item, Integer> materials = new HashMap<Item, Integer>();
+		HashMap<Item, Integer> materialsNeeded = new HashMap<Item, Integer>();
 		
 		for(int i = 0; i < 9; i++)
 		{
-			if(inventory[i] != null && !materials.containsKey(inventory[i].getItem()))
+			if(inventory[i] != null && !materialsNeeded.containsKey(inventory[i].getItem()))
 			{
-				materials.put(inventory[i].getItem(), 1);
+				materialsNeeded.put(inventory[i].getItem(), 1); //adding new Material
 			}
 			else if(inventory[i] != null)
 			{
-				materials.put(inventory[i].getItem(), materials.get(inventory[i].getItem()) + 1);
+				materialsNeeded.put(inventory[i].getItem(), materialsNeeded.get(inventory[i].getItem()) + 1); //increasing amount
 			}
 		}
 		
-		HashMap<Item, Integer> cp = (HashMap<Item, Integer>) materials.clone();
+		HashMap<Item, Integer> cp = (HashMap<Item, Integer>) materialsNeeded.clone();
 		
-		for(int i = 10; i < 25; i++)
+		for(int i = 10; i < 25; i++) //Input field
 		{
 			for(Entry<Item, Integer> entry : cp.entrySet())
 			{
-				if(inventory[i] != null && materials.get(inventory[i].getItem()) > 0 && inventory[i].getItem().equals(entry.getKey()))
+				if(inventory[i] != null && materialsNeeded.get(inventory[i].getItem()) != null && materialsNeeded.get(inventory[i].getItem()) > 0 && inventory[i].getItem().equals(entry.getKey()))
 				{
 					if(inventory[i].stackSize >= entry.getValue())
 					{
-						materials.put(inventory[i].getItem(), 0);
+						materialsNeeded.put(inventory[i].getItem(), 0);
 					}
 					else
 					{
-						materials.put(inventory[i].getItem(), materials.get(inventory[i].getItem()) - inventory[i].stackSize);
+						materialsNeeded.put(inventory[i].getItem(), materialsNeeded.get(inventory[i].getItem()) - inventory[i].stackSize);
 					}
 				}
 			}
 		}
-		for(int i : materials.values())
+		for(int i : materialsNeeded.values())
 		{
 			if(i > 0) return false;
 		}
