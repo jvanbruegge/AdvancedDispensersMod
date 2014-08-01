@@ -289,8 +289,6 @@ public class BlockBreaker extends BlockContainer
 	{
 		int meta = world.getBlockMetadata(x, y, z);
 		
-		if(meta < 8) return;
-		
 		int i = getI(x, y, z, meta);
 		int j = getJ(x, y, z, meta);
 		int k = getK(x, y, z, meta);
