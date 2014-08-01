@@ -35,6 +35,7 @@ public class BlockBreaker extends BlockContainer
 	private boolean silkTouch;
 	private BreakerTextureHelper textureHelper;
 	private Random rand = new Random();
+	private long lastActivation;
 	
 	public BlockBreaker(int tier, int fortune, boolean silkTouch, int tickRate) 
 	{
@@ -49,6 +50,7 @@ public class BlockBreaker extends BlockContainer
 		this.tier = tier;
 		this.tickRate = tickRate;
 		this.textureHelper = new BreakerTextureHelper(tier);
+		this.lastActivation = System.currentTimeMillis();
 	}
 
 	public static int getTierCount()
@@ -188,13 +190,13 @@ public class BlockBreaker extends BlockContainer
 	@Override
 	public int tickRate(World world)
 	{
-		return tickRate;
+		return 0;
 	}
 	
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random random)
 	{
-		if(!world.isRemote)
+		if(!world.isRemote && lastActivation + tickRate*1000/20 <= System.currentTimeMillis())
 		{
 			this.breakBlockInFront(world, x, y, z);
 		}
@@ -314,6 +316,7 @@ public class BlockBreaker extends BlockContainer
 				if(getSlotsForItemStack(stack, tileEntityBreaker))
 				{
 					world.setBlock(i, j, k, Blocks.air);
+					lastActivation = System.currentTimeMillis();
 				}
 			}
 		}
