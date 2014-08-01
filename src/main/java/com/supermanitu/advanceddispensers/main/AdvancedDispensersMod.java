@@ -16,6 +16,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import com.supermanitu.advanceddispensers.adjustablerepeater.AdjustableRepeaterConfig;
+import com.supermanitu.advanceddispensers.adjustablerepeater.BlockAdjustableRepeater;
+import com.supermanitu.advanceddispensers.adjustablerepeater.TileEntityAdjustableRepeater;
 import com.supermanitu.advanceddispensers.autocrafting.AutoCraftingConfig;
 import com.supermanitu.advanceddispensers.autocrafting.BlockAutoCrafting;
 import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
@@ -54,6 +57,8 @@ public class AdvancedDispensersMod
 	public static BlockBreaker[] blockBreaker;
 	public static BlockPlacer blockPlacer;
 	public static BlockAutoCrafting blockAutoCrafting;
+	public static BlockAdjustableRepeater[]  adjustableRepeater;
+	
 	
 	//Items
 	
@@ -72,6 +77,7 @@ public class AdvancedDispensersMod
 		 BreakerConfig breakerConfig = new BreakerConfig(config);
 		 PlacerConfig placerConfig = new PlacerConfig(config);
 		 AutoCraftingConfig autoCraftingConfig = new AutoCraftingConfig(config);
+		 AdjustableRepeaterConfig adjustableRepeaterConfig = new AdjustableRepeaterConfig(config);
 		 
 		 //Initialization
 		 advancedDispensersTab = new AdvancedDispensersTab("advanceddispenserstabs");
@@ -131,7 +137,7 @@ public class AdvancedDispensersMod
 			 GameRegistry.registerTileEntity(TileEntityPlacer.class, "tileEntityPlacer");
 			 GameRegistry.addShapedRecipe(new ItemStack(blockPlacer, 1), blockPlacer.getRecipe());
 		 }
-		 
+
 		 //Automated Crafting Table
 		 if(autoCraftingConfig.isEnabled())
 		 {
@@ -140,7 +146,20 @@ public class AdvancedDispensersMod
 			 GameRegistry.registerTileEntity(TileEntityAutoCrafting.class, "tileEntityAutoCrafting");
 			 GameRegistry.addShapedRecipe(new ItemStack(blockAutoCrafting, 1), blockAutoCrafting.getRecipe());
 		 }
-		 
+
+		 //Repeater
+		 if(adjustableRepeaterConfig.isEnabled())
+		 {
+			 adjustableRepeater = new BlockAdjustableRepeater[2];
+			 for(int i = 0; i < 2; i++)
+			 {
+				 adjustableRepeater[i] = new BlockAdjustableRepeater(BooleanUtils.toBoolean(i));
+				 GameRegistry.registerBlock(adjustableRepeater[i], adjustableRepeater[i].getUnlocalizedName().substring(5));
+				 GameRegistry.addShapelessRecipe(new ItemStack(adjustableRepeater[i], 1), adjustableRepeater[i].getRecipe());
+			 }
+			 GameRegistry.registerTileEntity(TileEntityAdjustableRepeater.class, "tileEntityAdjustableRepeater");
+		 }
+
 		 config.save();
 	 }
 
