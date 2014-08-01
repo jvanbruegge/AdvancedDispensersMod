@@ -22,9 +22,8 @@ group= "com.supermanitu.advanceddispensers" // http://maven.apache.org/guides/mi
 archivesBaseName = "advanceddispensers"
 
 minecraft {
-    version = "1.7.2-10.12.1.1110"
+    version = "1.7.10-10.13.0.1190"
     assetDir = "eclipse/assets"
-    runDir = "eclipse/assets"
 }
 
 dependencies {
