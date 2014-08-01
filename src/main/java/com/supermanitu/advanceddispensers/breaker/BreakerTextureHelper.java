@@ -68,6 +68,8 @@ public class BreakerTextureHelper
 		case 4: return textureBottom;
 		case 5: return textureTop;
 		
+		case 2: return textureSide_left;
+		
 		default: return textureSide_right;
 		}
 	}
@@ -78,6 +80,8 @@ public class BreakerTextureHelper
 		{
 		case 5: return textureBottom;
 		case 4: return textureTop;
+		
+		case 2: return textureSide_right;
 		
 		default: return textureSide_left;
 		}
@@ -92,6 +96,8 @@ public class BreakerTextureHelper
 		case 0: return textureSide_down;
 		case 1: return textureSide_down;
 		
+		case 5: return textureSide_left;
+		
 		default: return textureSide_right;
 		}
 	}
@@ -104,6 +110,8 @@ public class BreakerTextureHelper
 		case 2: return textureTop;
 		case 0: return textureSide_up;
 		case 1: return textureSide_up;
+		
+		case 5: return textureSide_right;
 		
 		default: return textureSide_left;
 		}
