@@ -32,7 +32,7 @@ import net.minecraft.world.World;
 public class BlockBreaker extends BlockContainer
 {
 	private int tier, tickRate, fortune;
-	private boolean silkTouch;
+	private boolean silkTouch, isBreaking;
 	private BreakerTextureHelper textureHelper;
 	private Random rand = new Random();
 	
@@ -49,6 +49,7 @@ public class BlockBreaker extends BlockContainer
 		this.tier = tier;
 		this.tickRate = tickRate;
 		this.textureHelper = new BreakerTextureHelper(tier);
+		this.isBreaking = false;
 	}
 
 	public static int getTierCount()
@@ -194,7 +195,7 @@ public class BlockBreaker extends BlockContainer
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random random)
 	{
-		if(!world.isRemote)
+		if(!world.isRemote && !isBreaking)
 		{
 			this.breakBlockInFront(world, x, y, z);
 		}
@@ -287,7 +288,10 @@ public class BlockBreaker extends BlockContainer
 	
 	private void breakBlockInFront(World world, int x, int y, int z) 
 	{
+		this.isBreaking = true;
+		
 		int meta = world.getBlockMetadata(x, y, z);
+		
 		int i = getI(x, y, z, meta);
 		int j = getJ(x, y, z, meta);
 		int k = getK(x, y, z, meta);
@@ -316,6 +320,7 @@ public class BlockBreaker extends BlockContainer
 				}
 			}
 		}
+		this.isBreaking = false;
 	}
 
 	private boolean getSlotsForItemStack(ItemStack stack, TileEntityBreaker tileEntityBreaker)
@@ -373,6 +378,9 @@ public class BlockBreaker extends BlockContainer
 	{
 		switch(meta)
 		{
+		case 4: return x-1;
+		case 5: return x+1;
+		
 		case 12: return x-1;
 		case 13: return x+1;
 		default: return x;
@@ -383,6 +391,9 @@ public class BlockBreaker extends BlockContainer
 	{
 		switch(meta)
 		{
+		case 0: return y-1;
+		case 1: return y+1;
+		
 		case 8: return y-1;
 		case 9: return y+1;
 		default: return y;
@@ -393,6 +404,9 @@ public class BlockBreaker extends BlockContainer
 	{
 		switch(meta)
 		{
+		case 2: return z-1;
+		case 3: return z+1;
+		
 		case 10: return z-1;
 		case 11: return z+1;
 		default: return z;
