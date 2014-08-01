@@ -15,6 +15,10 @@ buildscript {
     }
 }
 
+import org.ajoberstar.grgit.*
+
+
+
 apply plugin: 'forge'
 
 version = "1.2.0-b6"
@@ -28,6 +32,7 @@ minecraft {
 }
 
 dependencies {
+    
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
