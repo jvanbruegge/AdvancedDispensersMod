@@ -22,6 +22,9 @@ import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.breaker.BlockBreaker;
 import com.supermanitu.advanceddispensers.breaker.BreakerConfig;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
+import com.supermanitu.advanceddispensers.breeder.BlockBreeder;
+import com.supermanitu.advanceddispensers.breeder.BreederConfig;
+import com.supermanitu.advanceddispensers.breeder.TileEntityBreeder;
 import com.supermanitu.advanceddispensers.placer.BlockPlacer;
 import com.supermanitu.advanceddispensers.placer.PlacerConfig;
 import com.supermanitu.advanceddispensers.placer.TileEntityPlacer;
@@ -54,6 +57,7 @@ public class AdvancedDispensersMod
 	public static BlockBreaker[] blockBreaker;
 	public static BlockPlacer blockPlacer;
 	public static BlockAutoCrafting blockAutoCrafting;
+	public static BlockBreeder blockBreeder;
 	
 	//Items
 	
@@ -72,6 +76,7 @@ public class AdvancedDispensersMod
 		 BreakerConfig breakerConfig = new BreakerConfig(config);
 		 PlacerConfig placerConfig = new PlacerConfig(config);
 		 AutoCraftingConfig autoCraftingConfig = new AutoCraftingConfig(config);
+		 BreederConfig breederConfig = new BreederConfig(config);
 		 
 		 //Initialization
 		 advancedDispensersTab = new AdvancedDispensersTab("advanceddispenserstabs");
@@ -139,6 +144,15 @@ public class AdvancedDispensersMod
 			 GameRegistry.registerBlock(blockAutoCrafting, blockAutoCrafting.getUnlocalizedName().substring(5));
 			 GameRegistry.registerTileEntity(TileEntityAutoCrafting.class, "tileEntityAutoCrafting");
 			 GameRegistry.addShapedRecipe(new ItemStack(blockAutoCrafting, 1), blockAutoCrafting.getRecipe());
+		 }
+		 
+		 //Breeder
+		 if(breederConfig.isEnabled())
+		 {
+			 blockBreeder = new BlockBreeder();
+			 GameRegistry.registerBlock(blockBreeder, blockBreeder.getUnlocalizedName().substring(5));
+			 GameRegistry.registerTileEntity(TileEntityBreeder.class, "tileEntityBreeder");
+			 GameRegistry.addShapedRecipe(new ItemStack(blockBreeder, 1), blockBreeder.getRecipe());
 		 }
 		 
 		 config.save();
