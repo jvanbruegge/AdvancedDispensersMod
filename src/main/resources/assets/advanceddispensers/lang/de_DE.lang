@@ -1,0 +1,26 @@
+tile.blockPlacer.name=Blocksetzer
+container.placer=Blocksetzer
+
+tile.blockBreaker.2.name=Abreißer (Eisen)
+tile.blockBreaker.2.s.name=Abreißer (Eisen, Behutsamkeit)
+tile.blockBreaker.2.1.name=Abreißer (Eisen, Glück 1)
+tile.blockBreaker.2.2.name=Abreißer (Eisen, Glück 2)
+tile.blockBreaker.2.3.name=Abreißer (Eisen, Glück 3)
+
+tile.blockBreaker.3.name=Abreißer (Diamant)
+tile.blockBreaker.3.1.name=Abreißer (Diamant, Glück 1)
+tile.blockBreaker.3.2.name=Abreißer (Diamant, Glück 2)
+tile.blockBreaker.3.3.name=Abreißer (Diamant, Glück 3)
+tile.blockBreaker.3.s.name=Abreißer (Diamant, Behutsamkeit)
+container.breaker=Abreißer
+
+tile.autoCrafting.name=Automatische Werkbank
+container.autoCrafting=Automatische Werkbank
+
+autocrafting.input=Eingang
+autocrafting.output=Ausgang
+
+tile.blockBreeder.name=Futtertrog
+container.breeder=Futtertrog
+
+itemGroup.advanceddispenserstabs=Verbesserte Spender
