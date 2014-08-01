@@ -186,7 +186,7 @@ public class AdvancedDispensersMod
 
 		 try 
 		 {
-			 if(in.readLine().equals(VERSION)) 
+			 if(in.readLine().contains(VERSION)) 
 			 {
 				 in.close();
 				 is.close();
