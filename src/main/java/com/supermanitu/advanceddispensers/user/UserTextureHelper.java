@@ -1,4 +1,4 @@
-package com.supermanitu.advanceddispensers.placer;
+package com.supermanitu.advanceddispensers.user;
 
 import com.supermanitu.advanceddispensers.main.AdvancedDispensersMod;
 
@@ -8,7 +8,7 @@ import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class PlacerTextureHelper 
+public class UserTextureHelper 
 {
 	@SideOnly(Side.CLIENT)
 	private IIcon textureTop;
@@ -26,11 +26,11 @@ public class PlacerTextureHelper
 	public void registerBlockIcons(IIconRegister register)
 	{
 		textureBottom = Blocks.dispenser.getIcon(0, 1);
-		textureSide = register.registerIcon(AdvancedDispensersMod.MODID+":"+"Placer_side");
-		textureTop = register.registerIcon(AdvancedDispensersMod.MODID+":"+"Placer_top");
-		textureFront = register.registerIcon(AdvancedDispensersMod.MODID+":"+"Placer_front");
-		textureTopVertical = register.registerIcon(AdvancedDispensersMod.MODID+":"+"Placer_top_vertical");
-		textureBottomVertical = register.registerIcon(AdvancedDispensersMod.MODID+":"+"Placer_bottom_vertical");
+		textureSide = register.registerIcon(AdvancedDispensersMod.MODID+":"+"User_side");
+		textureTop = register.registerIcon(AdvancedDispensersMod.MODID+":"+"User_top");
+		textureFront = register.registerIcon(AdvancedDispensersMod.MODID+":"+"User_front");
+		textureTopVertical = register.registerIcon(AdvancedDispensersMod.MODID+":"+"User_top_vertical");
+		textureBottomVertical = register.registerIcon(AdvancedDispensersMod.MODID+":"+"User_bottom_vertical");
 	}
 	
 	public IIcon getIcon(int side, int metadata)

@@ -6,9 +6,9 @@ import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.breaker.ContainerBreaker;
 import com.supermanitu.advanceddispensers.breaker.GuiBreaker;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
-import com.supermanitu.advanceddispensers.placer.ContainerPlacer;
-import com.supermanitu.advanceddispensers.placer.GuiPlacer;
-import com.supermanitu.advanceddispensers.placer.TileEntityPlacer;
+import com.supermanitu.advanceddispensers.user.ContainerUser;
+import com.supermanitu.advanceddispensers.user.GuiUser;
+import com.supermanitu.advanceddispensers.user.TileEntityUser;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -26,9 +26,9 @@ public class GUIHandler implements IGuiHandler
 		{
 			return new ContainerBreaker(player.inventory, (TileEntityBreaker) tileentity);
 		}
-		else if(tileentity instanceof TileEntityPlacer)
+		else if(tileentity instanceof TileEntityUser)
 		{
-			return new ContainerPlacer(player.inventory, (TileEntityPlacer) tileentity);
+			return new ContainerUser(player.inventory, (TileEntityUser) tileentity);
 		}
 		else if(tileentity instanceof TileEntityAutoCrafting)
 		{
@@ -46,9 +46,9 @@ public class GUIHandler implements IGuiHandler
 		{
 			return new GuiBreaker(player.inventory, (TileEntityBreaker) tileentity);
 		}
-		else if(tileentity instanceof TileEntityPlacer)
+		else if(tileentity instanceof TileEntityUser)
 		{
-			return new GuiPlacer(player.inventory, (TileEntityPlacer) tileentity);
+			return new GuiUser(player.inventory, (TileEntityUser) tileentity);
 		}
 		else if(tileentity instanceof TileEntityAutoCrafting)
 		{

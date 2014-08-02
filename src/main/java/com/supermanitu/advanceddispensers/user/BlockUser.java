@@ -1,4 +1,4 @@
-package com.supermanitu.advanceddispensers.placer;
+package com.supermanitu.advanceddispensers.user;
 
 import java.util.Random;
 
@@ -27,23 +27,23 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
-public class BlockPlacer extends BlockContainer
+public class BlockUser extends BlockContainer
 {
 	private int tickRate;
 	
-	private PlacerTextureHelper textureHelper;
+	private UserTextureHelper textureHelper;
 	private Random rand = new Random();
 	
-	public BlockPlacer(int tickRate) 
+	public BlockUser(int tickRate) 
 	{
 		super(Material.wood);
 		this.tickRate = tickRate;
 		this.setCreativeTab(AdvancedDispensersMod.advancedDispensersTab);
 		this.setHardness(2f);
-		this.setBlockName("blockPlacer");
+		this.setBlockName("blockUser");
 		this.setStepSound(soundTypeWood);
 		
-		this.textureHelper = new PlacerTextureHelper();
+		this.textureHelper = new UserTextureHelper();
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -100,13 +100,13 @@ public class BlockPlacer extends BlockContainer
 	
 	public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {
-        TileEntityPlacer tileEntityPlacer = (TileEntityPlacer)world.getTileEntity(x, y, z);
+        TileEntityUser tileEntityUser = (TileEntityUser)world.getTileEntity(x, y, z);
 
-        if (tileEntityPlacer != null)
+        if (tileEntityUser != null)
         {
-            for (int i1 = 0; i1 < tileEntityPlacer.getSizeInventory(); ++i1)
+            for (int i1 = 0; i1 < tileEntityUser.getSizeInventory(); ++i1)
             {
-                ItemStack itemstack = tileEntityPlacer.getStackInSlot(i1);
+                ItemStack itemstack = tileEntityUser.getStackInSlot(i1);
 
                 if (itemstack != null)
                 {
@@ -199,7 +199,7 @@ public class BlockPlacer extends BlockContainer
 	@Override
 	public TileEntity createNewTileEntity(World world, int var2)
 	{
-		return new TileEntityPlacer();
+		return new TileEntityUser();
 	}
 	
 	public Object[] getRecipe()
@@ -209,7 +209,7 @@ public class BlockPlacer extends BlockContainer
 	
 	private void placeBlockInFront(World world, int x, int y, int z)
 	{
-		TileEntityPlacer tileEntity = (TileEntityPlacer) world.getTileEntity(x, y, z);
+		TileEntityUser tileEntity = (TileEntityUser) world.getTileEntity(x, y, z);
 		int meta = world.getBlockMetadata(x, y, z);
 		
 		int i = getI(meta, x);
@@ -281,18 +281,18 @@ public class BlockPlacer extends BlockContainer
 		}
 	}
 	
-	private int getFirstSlot(TileEntityPlacer tileEntityPlacer, World world, int x, int y, int z) 
+	private int getFirstSlot(TileEntityUser tileEntityUser, World world, int x, int y, int z) 
 	{
 		int slot = -1;
 		for(int i = 0; i < 9; i++)
 		{
-			if(tileEntityPlacer.getStackInSlot(i) != null && tileEntityPlacer.getStackInSlot(i).stackSize != 0)
+			if(tileEntityUser.getStackInSlot(i) != null && tileEntityUser.getStackInSlot(i).stackSize != 0)
 			{
-				if(Block.getBlockFromItem(tileEntityPlacer.getStackInSlot(i).getItem()) != null)
+				if(Block.getBlockFromItem(tileEntityUser.getStackInSlot(i).getItem()) != null)
 				{
 					return i;
 				}
-				if(tileEntityPlacer.getStackInSlot(i).getItem() instanceof IPlantable && world.getBlock(x, y-1, z).equals(Blocks.farmland))
+				if(tileEntityUser.getStackInSlot(i).getItem() instanceof IPlantable && world.getBlock(x, y-1, z).equals(Blocks.farmland))
 				{
 					return i;
 				}

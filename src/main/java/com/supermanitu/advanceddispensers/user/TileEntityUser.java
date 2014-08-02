@@ -1,4 +1,4 @@
-package com.supermanitu.advanceddispensers.placer;
+package com.supermanitu.advanceddispensers.user;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -7,14 +7,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityPlacer extends TileEntity implements IInventory
+public class TileEntityUser extends TileEntity implements IInventory
 {
 	private ItemStack[] inventory = new ItemStack[9];
 	private String invName;
 	
-	public TileEntityPlacer()
+	public TileEntityUser()
 	{
-		this.invName = "container.placer";
+		this.invName = "container.user";
 	}
 
 	@Override

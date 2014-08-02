@@ -1,5 +1,5 @@
-tile.blockPlacer.name=Placer
-container.placer=Placer
+tile.blockUser.name=User
+container.user=User
 
 tile.blockBreaker.2.name=Breaker (Iron)
 tile.blockBreaker.2.s.name=Breaker (Iron, Silk Touch)

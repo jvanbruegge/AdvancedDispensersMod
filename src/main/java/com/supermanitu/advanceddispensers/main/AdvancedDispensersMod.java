@@ -22,10 +22,10 @@ import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.breaker.BlockBreaker;
 import com.supermanitu.advanceddispensers.breaker.BreakerConfig;
 import com.supermanitu.advanceddispensers.breaker.TileEntityBreaker;
-import com.supermanitu.advanceddispensers.placer.BlockPlacer;
-import com.supermanitu.advanceddispensers.placer.PlacerConfig;
-import com.supermanitu.advanceddispensers.placer.TileEntityPlacer;
 import com.supermanitu.advanceddispensers.proxies.CommonProxy;
+import com.supermanitu.advanceddispensers.user.BlockUser;
+import com.supermanitu.advanceddispensers.user.UserConfig;
+import com.supermanitu.advanceddispensers.user.TileEntityUser;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -52,7 +52,7 @@ public class AdvancedDispensersMod
 	
 	//Blocks
 	public static BlockBreaker[] blockBreaker;
-	public static BlockPlacer blockPlacer;
+	public static BlockUser blockUser;
 	public static BlockAutoCrafting blockAutoCrafting;
 	
 	//Items
@@ -70,7 +70,7 @@ public class AdvancedDispensersMod
 		 config.load();
 		 
 		 BreakerConfig breakerConfig = new BreakerConfig(config);
-		 PlacerConfig placerConfig = new PlacerConfig(config);
+		 UserConfig userConfig = new UserConfig(config);
 		 AutoCraftingConfig autoCraftingConfig = new AutoCraftingConfig(config);
 		 
 		 //Initialization
@@ -123,13 +123,13 @@ public class AdvancedDispensersMod
 			 GameRegistry.registerTileEntity(TileEntityBreaker.class, "tileEntityBreaker");
 		 }
 
-		 //Placer
-		 if(placerConfig.isEnabled())
+		 //User
+		 if(userConfig.isEnabled())
 		 {
-			 blockPlacer = new BlockPlacer(placerConfig.getTick());
-			 GameRegistry.registerBlock(blockPlacer, blockPlacer.getUnlocalizedName().substring(5));
-			 GameRegistry.registerTileEntity(TileEntityPlacer.class, "tileEntityPlacer");
-			 GameRegistry.addShapedRecipe(new ItemStack(blockPlacer, 1), blockPlacer.getRecipe());
+			 blockUser = new BlockUser(userConfig.getTick());
+			 GameRegistry.registerBlock(blockUser, blockUser.getUnlocalizedName().substring(5));
+			 GameRegistry.registerTileEntity(TileEntityUser.class, "tileEntityUser");
+			 GameRegistry.addShapedRecipe(new ItemStack(blockUser, 1), blockUser.getRecipe());
 		 }
 		 
 		 //Automated Crafting Table

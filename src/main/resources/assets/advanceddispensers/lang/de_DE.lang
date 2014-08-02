@@ -1,5 +1,5 @@
-tile.blockPlacer.name=Blocksetzer
-container.placer=Blocksetzer
+tile.blockUser.name=Benutzer
+container.user=Benutzer
 
 tile.blockBreaker.2.name=Abreißer (Eisen)
 tile.blockBreaker.2.s.name=Abreißer (Eisen, Behutsamkeit)
