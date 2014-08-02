@@ -26,6 +26,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockUser extends BlockContainer
 {
@@ -225,13 +226,11 @@ public class BlockUser extends BlockContainer
 		ItemStack itemStack = tileEntity.getStackInSlot(slot);
 		int itemMetadata = itemStack.getItemDamage();
 		
-		if(tileEntity.getStackInSlot(slot).getItem() instanceof IPlantable)
+		if(itemStack.getItem() instanceof IPlantable)
 		{
 			block = ((IPlantable) itemStack.getItem()).getPlant(world, i, j, k);
-			if(!world.getBlock(i, j-1, k).equals(Blocks.farmland))
-			{
-				return;
-			}
+			
+			if(!world.getBlock(i, j-1, k).canSustainPlant(world, i, j, k, ForgeDirection.UP, (IPlantable) block)) return;
 		}
 		else
 		{
