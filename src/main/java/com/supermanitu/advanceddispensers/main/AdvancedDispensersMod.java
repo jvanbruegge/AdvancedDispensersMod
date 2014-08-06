@@ -126,7 +126,7 @@ public class AdvancedDispensersMod
 		 //User
 		 if(userConfig.isEnabled())
 		 {
-			 blockUser = new BlockUser(userConfig.getTick());
+			 blockUser = new BlockUser(userConfig.getTick(), userConfig.isFakePlayerEnabled());
 			 GameRegistry.registerBlock(blockUser, blockUser.getUnlocalizedName().substring(5));
 			 GameRegistry.registerTileEntity(TileEntityUser.class, "tileEntityUser");
 			 GameRegistry.addShapedRecipe(new ItemStack(blockUser, 1), blockUser.getRecipe());

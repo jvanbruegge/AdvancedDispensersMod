@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Property;
 
 public class UserConfig 
 {
-	private boolean enabled;
+	private boolean enabled, fakeEnabled;
 	private int tick;
 	
 	public UserConfig(Configuration config)
@@ -17,6 +17,10 @@ public class UserConfig
 		Property enabled = config.get(Configuration.CATEGORY_GENERAL, "enableUser", true);
 		enabled.comment = "true if the User should be enabled";
 		this.enabled = enabled.getBoolean(true);
+		
+		Property fakeEnabled = config.get(Configuration.CATEGORY_GENERAL, "enableFakePlayer", true);
+		enabled.comment = "true if the User should have a fake player, nessecary for item right click";
+		this.fakeEnabled = fakeEnabled.getBoolean(true);
 	}
 	
 	public int getTick()
@@ -27,5 +31,10 @@ public class UserConfig
 	public boolean isEnabled()
 	{
 		return enabled;
+	}
+	
+	public boolean isFakePlayerEnabled()
+	{
+		return fakeEnabled;
 	}
 }

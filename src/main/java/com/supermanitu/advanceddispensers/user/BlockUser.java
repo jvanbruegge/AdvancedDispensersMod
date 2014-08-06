@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.main.AdvancedDispensersMod;
+import com.supermanitu.advanceddispensers.main.EntityFakePlayer;
+import com.supermanitu.advanceddispensers.main.TileEntityAdvancedDispensers;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -31,11 +33,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BlockUser extends BlockContainer
 {
 	private int tickRate;
-	
+	private EntityFakePlayer fakePlayer;
 	private UserTextureHelper textureHelper;
 	private Random rand = new Random();
+	private boolean enableFakePlayer;
 	
-	public BlockUser(int tickRate) 
+	public BlockUser(int tickRate, boolean enableFakePlayer) 
 	{
 		super(Material.wood);
 		this.tickRate = tickRate;
@@ -45,6 +48,8 @@ public class BlockUser extends BlockContainer
 		this.setStepSound(soundTypeWood);
 		
 		this.textureHelper = new UserTextureHelper();
+		this.enableFakePlayer = enableFakePlayer;
+		this.fakePlayer = null;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -175,7 +180,37 @@ public class BlockUser extends BlockContainer
 	{
 		if(!world.isRemote)
 		{
-			this.placeBlockInFront(world, x, y, z);
+			TileEntityUser tileEntity = (TileEntityUser) world.getTileEntity(x, y, z);
+			int slot = getFirstSlot(tileEntity);
+			if(slot < 0) return;
+			Item item = tileEntity.getStackInSlot(slot).getItem();
+			int meta = world.getBlockMetadata(x, y, z);
+			
+			int i = getI(meta, x);
+			int j = getJ(meta, y);
+			int k = getK(meta, z);
+			
+			if(!Block.getBlockFromItem(item).equals(Blocks.air))
+			{
+				System.out.println("Block: " + Block.getBlockFromItem(item).getUnlocalizedName());
+				this.placeBlockInFront(world, tileEntity, x, y, z, i, j, k, meta, slot); //Old Placing functions
+			}
+			else if(enableFakePlayer)
+			{
+				if(fakePlayer == null) fakePlayer = new EntityFakePlayer(world, (TileEntityAdvancedDispensers) world.getTileEntity(x, y, z), x, y, z, meta);
+				
+				if(item.onItemUse(tileEntity.getStackInSlot(slot), fakePlayer, world, i, j, k, 0, 0.5f, 1.0f, 0.5f))
+				{
+					System.out.println("itemUse");
+					return;
+				}
+				else
+				{
+					tileEntity.setInventorySlotContents(slot, item.onItemRightClick(tileEntity.getStackInSlot(slot), world, fakePlayer));
+					if(tileEntity.getStackInSlot(slot).stackSize == 0) tileEntity.setInventorySlotContents(slot, null);
+					System.out.println("itemRightClick");
+				}
+			}
 		}
 	}
 
@@ -208,17 +243,8 @@ public class BlockUser extends BlockContainer
 		return new Object[]{"XCX", "CSC", "FCF", 'X', Blocks.planks, 'C', Items.redstone, 'S', Blocks.dispenser, 'F', Blocks.stone};
 	}
 	
-	private void placeBlockInFront(World world, int x, int y, int z)
-	{
-		TileEntityUser tileEntity = (TileEntityUser) world.getTileEntity(x, y, z);
-		int meta = world.getBlockMetadata(x, y, z);
-		
-		int i = getI(meta, x);
-		int j = getJ(meta, y);
-		int k = getK(meta, z);
-		
-		int slot = getFirstSlot(tileEntity, world, i, j, k);
-		
+	private void placeBlockInFront(World world, TileEntityUser tileEntity, int x, int y, int z, int i, int j, int k, int meta, int slot)
+	{		
 		if(slot == -1) return;
 		
 		Block block = null;
@@ -280,21 +306,14 @@ public class BlockUser extends BlockContainer
 		}
 	}
 	
-	private int getFirstSlot(TileEntityUser tileEntityUser, World world, int x, int y, int z) 
+	private int getFirstSlot(TileEntityUser tileEntityUser) 
 	{
 		int slot = -1;
 		for(int i = 0; i < 9; i++)
 		{
-			if(tileEntityUser.getStackInSlot(i) != null && tileEntityUser.getStackInSlot(i).stackSize != 0)
+			if(tileEntityUser.getStackInSlot(i) != null && tileEntityUser.getStackInSlot(i).stackSize > 0)
 			{
-				if(Block.getBlockFromItem(tileEntityUser.getStackInSlot(i).getItem()) != null)
-				{
-					return i;
-				}
-				if(tileEntityUser.getStackInSlot(i).getItem() instanceof IPlantable && world.getBlock(x, y-1, z).equals(Blocks.farmland))
-				{
-					return i;
-				}
+				return i;
 			}
 		}
 		return slot;
