@@ -23,12 +23,6 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 	}
 
 	@Override
-	public int getInventoryStackLimit() 
-	{
-		return 64;
-	}
-
-	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) 
 	{
 		return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : player.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
@@ -64,16 +58,14 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 		
 		if(fakePlayer == null) fakePlayer = new EntityFakePlayer(world, (TileEntityAdvancedDispensers) world.getTileEntity(x, y, z), x, y, z, meta);
 		
-		if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j, k, 0, 0.5f, 1.0f, 0.5f))
-		{
-			System.out.println("itemUse");
-			return;
-		}
-		else
+		if(!item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j, k, 0, 0.5f, 1.0f, 0.5f))
 		{
 			this.setInventorySlotContents(slot, item.onItemRightClick(this.getStackInSlot(slot), world, fakePlayer));
 			if(this.getStackInSlot(slot).stackSize == 0) this.setInventorySlotContents(slot, null);
-			System.out.println("itemRightClick");
+		}
+		else
+		{
+			System.out.println("itemUse");
 		}
 	}
 }

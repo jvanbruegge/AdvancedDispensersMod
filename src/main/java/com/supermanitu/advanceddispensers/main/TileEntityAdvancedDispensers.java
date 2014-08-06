@@ -20,6 +20,12 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 	}
 	
 	@Override
+	public int getInventoryStackLimit() 
+	{
+		return 64;
+	}
+	
+	@Override
 	public int getSizeInventory() 
 	{
 		return invSize;
