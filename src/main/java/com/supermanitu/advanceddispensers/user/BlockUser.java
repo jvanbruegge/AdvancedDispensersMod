@@ -33,7 +33,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BlockUser extends BlockContainer
 {
 	private int tickRate;
-	private EntityFakePlayer fakePlayer;
+	
 	private UserTextureHelper textureHelper;
 	private Random rand = new Random();
 	private boolean enableFakePlayer;
@@ -49,7 +49,6 @@ public class BlockUser extends BlockContainer
 		
 		this.textureHelper = new UserTextureHelper();
 		this.enableFakePlayer = enableFakePlayer;
-		this.fakePlayer = null;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -197,19 +196,8 @@ public class BlockUser extends BlockContainer
 			}
 			else if(enableFakePlayer)
 			{
-				if(fakePlayer == null) fakePlayer = new EntityFakePlayer(world, (TileEntityAdvancedDispensers) world.getTileEntity(x, y, z), x, y, z, meta);
 				
-				if(item.onItemUse(tileEntity.getStackInSlot(slot), fakePlayer, world, i, j, k, 0, 0.5f, 1.0f, 0.5f))
-				{
-					System.out.println("itemUse");
-					return;
-				}
-				else
-				{
-					tileEntity.setInventorySlotContents(slot, item.onItemRightClick(tileEntity.getStackInSlot(slot), world, fakePlayer));
-					if(tileEntity.getStackInSlot(slot).stackSize == 0) tileEntity.setInventorySlotContents(slot, null);
-					System.out.println("itemRightClick");
-				}
+				tileEntity.useItem(world, x, y, z, meta, slot, i, j, k);
 			}
 		}
 	}

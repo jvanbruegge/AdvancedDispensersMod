@@ -1,19 +1,25 @@
 package com.supermanitu.advanceddispensers.user;
 
+import com.supermanitu.advanceddispensers.main.EntityFakePlayer;
 import com.supermanitu.advanceddispensers.main.TileEntityAdvancedDispensers;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class TileEntityUser extends TileEntityAdvancedDispensers
 {
+	private EntityFakePlayer fakePlayer;
+	
 	public TileEntityUser()
 	{
 		super("container.user", 9);
+		this.fakePlayer = null;
 	}
 
 	@Override
@@ -51,4 +57,23 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
     {
         super.writeToNBT(tagCompound);
     }
+	
+	public void useItem(World world, int x, int y, int z, int meta, int slot, int i, int j, int k)
+	{
+		Item item = this.getStackInSlot(slot).getItem();
+		
+		if(fakePlayer == null) fakePlayer = new EntityFakePlayer(world, (TileEntityAdvancedDispensers) world.getTileEntity(x, y, z), x, y, z, meta);
+		
+		if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j, k, 0, 0.5f, 1.0f, 0.5f))
+		{
+			System.out.println("itemUse");
+			return;
+		}
+		else
+		{
+			this.setInventorySlotContents(slot, item.onItemRightClick(this.getStackInSlot(slot), world, fakePlayer));
+			if(this.getStackInSlot(slot).stackSize == 0) this.setInventorySlotContents(slot, null);
+			System.out.println("itemRightClick");
+		}
+	}
 }

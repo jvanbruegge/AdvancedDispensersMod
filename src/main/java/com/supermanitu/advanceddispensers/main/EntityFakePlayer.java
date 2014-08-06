@@ -45,33 +45,31 @@ public class EntityFakePlayer extends EntityPlayer
         double var7 = (double)z + 0.5D;
         float var1;
         float var2;
-        
-        System.out.println("Meta: " + (meta - 8));
 
         switch (meta - 8)
         {
             case 0:
-                var1 = -90.0F;
-                var2 = 0.0F;
-                var5 += 0.51D;
-                break;
-
-            case 1:
-                var1 = 90.0F; 
+                var1 = 90.0F;
                 var2 = 0.0F;
                 var5 -= 0.51D;
                 break;
 
+            case 1:
+                var1 = -90.0F; 
+                var2 = 0.0F;
+                var5 += 0.51D;
+                break;
+
             case 2:
                 var1 = 0.0F;
-                var2 = 0.0F;
-                var7 += 0.51D;
+                var2 = 180.0F;
+                var7 -= 0.51D;
                 break;
 
             case 3:
                 var1 = 0.0F;
-                var2 = 180.0F;
-                var7 -= 0.51D;
+                var2 = 0.0F;
+                var7 += 0.51D;
                 break;
 
             case 4:
@@ -82,8 +80,8 @@ public class EntityFakePlayer extends EntityPlayer
 
             default:
                 var1 = 0.0F;
-                var2 = 270.0F; //90
-                var3 += 0.51D; //-=
+                var2 = 270.0F;
+                var3 += 0.51D;
         }
         
         this.setLocationAndAngles(var3, var5, var7, var2, var1);
