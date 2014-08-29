@@ -1,5 +1,6 @@
 package com.supermanitu.advanceddispensers.main;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -109,6 +110,24 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 	{
 		return true;
 	}
+	
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer player) 
+	{
+		return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : player.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int var1, ItemStack var2) 
+	{
+		return true;
+	}
+	
+	@Override
+	public void openInventory() { }
+
+	@Override
+	public void closeInventory() { }
 	
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound)
