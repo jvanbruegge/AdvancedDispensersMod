@@ -103,16 +103,16 @@ public class BlockUser extends BlockAdvancedDispensers
 			Item item = tileEntity.getStackInSlot(slot).getItem();
 			int meta = world.getBlockMetadata(x, y, z);
 			
-			/*if(!Block.getBlockFromItem(item).equals(Blocks.air))
+			if(enableFakePlayer)
+			{
+				tileEntity.useItem(world, x, y, z, meta, slot);
+			}
+			else if(!Block.getBlockFromItem(item).equals(Blocks.air))
 			{
 				int i = AdvancedDispensersLib.INSTANCE.getI(meta, x);
 				int j = AdvancedDispensersLib.INSTANCE.getJ(meta, y);
 				int k = AdvancedDispensersLib.INSTANCE.getK(meta, z);
-				this.placeBlockInFront(world, tileEntity, x, y, z, i, j, k, meta, slot); //Old Placing functions
-			}
-			else */if(enableFakePlayer)
-			{
-				tileEntity.useItem(world, x, y, z, meta, slot);
+				this.placeBlockInFront(world, tileEntity, x, y, z, i, j, k, meta, slot); //Old Placing function
 			}
 		}
 	}

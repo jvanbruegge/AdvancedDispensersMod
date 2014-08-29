@@ -43,11 +43,11 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 		if(meta % 2 == 0) side = meta + 1;
 		else side = meta - 1;
 		
-		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, world, x, y, z, side, 0.5f, 1.0f, 0.5f))
+		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, world, i, j, k, side, 0.5f, 0.5f, 0.5f))
 		{
 			//Extra Stuff maybe
 		}
-		else if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j, k, side, 0.5f, 1.0f, 0.5f))
+		else if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j, k, side, 0.5f, 0.5f, 0.5f))
 		{
 			//Extra Stuff maybe
 		}

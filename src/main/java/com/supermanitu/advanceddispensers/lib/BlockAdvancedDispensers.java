@@ -86,13 +86,13 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 	
 	public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {
-        TileEntityAutoCrafting tileEntityAutoCrafting = (TileEntityAutoCrafting)world.getTileEntity(x, y, z);
+        TileEntityAdvancedDispensers tileEntityAdvancedDispensers = (TileEntityAdvancedDispensers)world.getTileEntity(x, y, z);
 
-        if (tileEntityAutoCrafting != null)
+        if (tileEntityAdvancedDispensers != null)
         {
-            for (int i1 = 0; i1 < tileEntityAutoCrafting.getSizeInventory(); ++i1)
+            for (int i1 = 0; i1 < tileEntityAdvancedDispensers.getSizeInventory(); ++i1)
             {
-                ItemStack itemstack = tileEntityAutoCrafting.getStackInSlot(i1);
+                ItemStack itemstack = tileEntityAdvancedDispensers.getStackInSlot(i1);
 
                 if (itemstack != null)
                 {
