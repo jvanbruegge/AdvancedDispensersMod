@@ -3,6 +3,7 @@ package com.supermanitu.advanceddispensers.main;
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
+import com.supermanitu.advanceddispensers.lib.TileEntityAdvancedDispensers;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChunkCoordinates;

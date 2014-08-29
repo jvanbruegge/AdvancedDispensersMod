@@ -1,8 +1,8 @@
 package com.supermanitu.advanceddispensers.user;
 
 import com.supermanitu.advanceddispensers.lib.AdvancedDispensersLib;
+import com.supermanitu.advanceddispensers.lib.TileEntityAdvancedDispensers;
 import com.supermanitu.advanceddispensers.main.EntityFakePlayer;
-import com.supermanitu.advanceddispensers.main.TileEntityAdvancedDispensers;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

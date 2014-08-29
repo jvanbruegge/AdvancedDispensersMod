@@ -1,5 +1,7 @@
 package com.supermanitu.advanceddispensers.main;
 
+import com.supermanitu.advanceddispensers.lib.TileEntityAdvancedDispensers;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemArmor;

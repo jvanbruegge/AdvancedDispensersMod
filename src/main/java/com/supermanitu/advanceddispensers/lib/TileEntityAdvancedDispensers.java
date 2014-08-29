@@ -1,4 +1,4 @@
-package com.supermanitu.advanceddispensers.main;
+package com.supermanitu.advanceddispensers.lib;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
