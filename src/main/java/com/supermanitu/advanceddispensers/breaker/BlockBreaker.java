@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
+import com.supermanitu.advanceddispensers.lib.AdvancedDispensersLib;
 import com.supermanitu.advanceddispensers.main.AdvancedDispensersMod;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -291,9 +292,9 @@ public class BlockBreaker extends BlockContainer
 	{
 		int meta = world.getBlockMetadata(x, y, z);
 		
-		int i = getI(x, y, z, meta);
-		int j = getJ(x, y, z, meta);
-		int k = getK(x, y, z, meta);
+		int i = AdvancedDispensersLib.INSTANCE.getI(meta, x);
+		int j = AdvancedDispensersLib.INSTANCE.getJ(meta, y);
+		int k = AdvancedDispensersLib.INSTANCE.getK(meta, z);
 		
 		Block block = world.getBlock(i, j, k);
 		int blockmeta = world.getBlockMetadata(i, j, k);
@@ -371,44 +372,5 @@ public class BlockBreaker extends BlockContainer
 			}
 		}
 		return -1;
-	}
-
-	private int getI(int x, int y, int z, int meta) 
-	{
-		switch(meta)
-		{
-		case 4: return x-1;
-		case 5: return x+1;
-		
-		case 12: return x-1;
-		case 13: return x+1;
-		default: return x;
-		}
-	}
-
-	private int getJ(int x, int y, int z, int meta)
-	{
-		switch(meta)
-		{
-		case 0: return y-1;
-		case 1: return y+1;
-		
-		case 8: return y-1;
-		case 9: return y+1;
-		default: return y;
-		}
-	}
-
-	private int getK(int x, int y, int z, int meta) 
-	{
-		switch(meta)
-		{
-		case 2: return z-1;
-		case 3: return z+1;
-		
-		case 10: return z-1;
-		case 11: return z+1;
-		default: return z;
-		}
 	}
 }

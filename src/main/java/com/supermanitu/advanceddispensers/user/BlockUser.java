@@ -3,6 +3,7 @@ package com.supermanitu.advanceddispensers.user;
 import java.util.Random;
 
 import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
+import com.supermanitu.advanceddispensers.lib.AdvancedDispensersLib;
 import com.supermanitu.advanceddispensers.main.AdvancedDispensersMod;
 import com.supermanitu.advanceddispensers.main.EntityFakePlayer;
 import com.supermanitu.advanceddispensers.main.TileEntityAdvancedDispensers;
@@ -185,9 +186,9 @@ public class BlockUser extends BlockContainer
 			Item item = tileEntity.getStackInSlot(slot).getItem();
 			int meta = world.getBlockMetadata(x, y, z);
 			
-			int i = getI(meta, x);
-			int j = getJ(meta, y);
-			int k = getK(meta, z);
+			int i = AdvancedDispensersLib.INSTANCE.getI(meta, x);
+			int j = AdvancedDispensersLib.INSTANCE.getJ(meta, y);
+			int k = AdvancedDispensersLib.INSTANCE.getK(meta, z);
 			
 			if(!Block.getBlockFromItem(item).equals(Blocks.air))
 			{
@@ -197,7 +198,7 @@ public class BlockUser extends BlockContainer
 			else if(enableFakePlayer)
 			{
 				
-				tileEntity.useItem(world, x, y, z, meta, slot, i, j, k);
+				tileEntity.useItem(world, x, y, z, meta, slot);
 			}
 		}
 	}
@@ -258,39 +259,6 @@ public class BlockUser extends BlockContainer
 			
 			tileEntity.getStackInSlot(slot).stackSize--;
 			if(tileEntity.getStackInSlot(slot).stackSize == 0) tileEntity.setInventorySlotContents(slot, null);
-		}
-	}
-	
-	private int getI(int meta, int x)
-	{
-		switch(meta)
-		{
-		case 13: return x+1;
-		case 12: return x-1;
-		
-		default: return x;
-		}
-	}
-	
-	private int getJ(int meta, int y)
-	{
-		switch(meta)
-		{
-		case 9: return 1+y;
-		case 8: return y-1;
-		
-		default: return y;
-		}
-	}
-	
-	private int getK(int meta, int z)
-	{
-		switch(meta)
-		{
-		case 11: return z+1;
-		case 10: return z-1;
-		
-		default: return z;
 		}
 	}
 	

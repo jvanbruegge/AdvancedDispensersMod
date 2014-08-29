@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 
 public class EntityFakePlayer extends EntityPlayer
 {
+	private final int range = 5;
+	
 	public EntityFakePlayer(World world, TileEntityAdvancedDispensers tileEntity, int x, int y, int z, int meta)
 	{
 		super(world, new GameProfile(UUID.randomUUID(), "fakePlayer"));
@@ -36,6 +38,11 @@ public class EntityFakePlayer extends EntityPlayer
 	public ChunkCoordinates getPlayerCoordinates() 
 	{
 		return null;
+	}
+	
+	public int getRange()
+	{
+		return range;
 	}
 	
 	private void initPosition(int x, int y, int z, int meta)
