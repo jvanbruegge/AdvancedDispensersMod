@@ -58,14 +58,23 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 		
 		if(fakePlayer == null) fakePlayer = new EntityFakePlayer(world, (TileEntityAdvancedDispensers) world.getTileEntity(x, y, z), x, y, z, meta);
 		
-		if(!item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j, k, 0, 0.5f, 1.0f, 0.5f))
+		int side;
+		
+		if(meta % 2 == 0) side = meta + 1;
+		else side = meta - 1;
+		
+		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, world, x, y, z, side, 0.5f, 1.0f, 0.5f))
 		{
-			this.setInventorySlotContents(slot, item.onItemRightClick(this.getStackInSlot(slot), world, fakePlayer));
-			if(this.getStackInSlot(slot).stackSize == 0) this.setInventorySlotContents(slot, null);
+			System.out.println("UseFirst");
+		}
+		else if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j-1, k, side, 0.5f, 1.0f, 0.5f))
+		{
+			System.out.println("Use");
 		}
 		else
 		{
-			System.out.println("itemUse");
+			this.setInventorySlotContents(slot, item.onItemRightClick(this.getStackInSlot(slot), world, fakePlayer));
+			if(this.getStackInSlot(slot).stackSize == 0) this.setInventorySlotContents(slot, null);
 		}
 	}
 }
