@@ -18,10 +18,10 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 {
 	private EntityFakePlayer fakePlayer;
 	
-	public TileEntityUser()
+	public TileEntityUser(World world)
 	{
 		super("container.user", 9);
-		fakePlayer = new EntityFakePlayer(worldObj, (TileEntityAdvancedDispensers) worldObj.getTileEntity(xCoord, yCoord, zCoord), xCoord, yCoord, zCoord, worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+		fakePlayer = new EntityFakePlayer(world, this, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
 	}
 	
 	public void useItem(World world, int x, int y, int z, int meta, int slot)

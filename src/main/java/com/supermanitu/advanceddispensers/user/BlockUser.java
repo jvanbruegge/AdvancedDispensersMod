@@ -221,7 +221,7 @@ public class BlockUser extends BlockContainer
 	@Override
 	public TileEntity createNewTileEntity(World world, int var2)
 	{
-		return new TileEntityUser();
+		return new TileEntityUser(world);
 	}
 	
 	public Object[] getRecipe()
