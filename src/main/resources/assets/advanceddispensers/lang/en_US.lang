@@ -24,3 +24,5 @@ tile.blockBreeder.name=Feeding Trough
 container.breeder=Feeding Trough
 
 itemGroup.advanceddispenserstabs=Advanced Dispensers
+
+message.tooManyBlocks=You already have the max amount of blocks of this kind.

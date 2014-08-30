@@ -18,17 +18,23 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 {
 	private EntityFakePlayer fakePlayer;
 	
-	public TileEntityUser(World world)
+	public TileEntityUser()
 	{
 		super("container.user", 9);
-		fakePlayer = new EntityFakePlayer(world, this, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord));
 	}
 	
-	public void useItem(World world, int x, int y, int z, int meta, int slot)
+	@Override
+	public void setWorldObj(World world)
+	{
+		super.setWorldObj(world);
+		fakePlayer = new EntityFakePlayer(worldObj, this, xCoord, yCoord, zCoord, worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+	}
+	
+	public void useItem(int slot)
 	{
 		Item item = this.getStackInSlot(slot).getItem();
 		
-		int i = x, j = y, k = z, c = 0;
+		int i = xCoord, j = yCoord, k = zCoord, c = 0, meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
 		
 		do
 		{
@@ -36,24 +42,24 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 			j = AdvancedDispensersLib.INSTANCE.getJ(meta, j);
 			k = AdvancedDispensersLib.INSTANCE.getK(meta, k);
 			c++;
-		}while(c < fakePlayer.getRange() && !world.getBlock(i, j, k).equals(Blocks.air));
+		}while(c < fakePlayer.getRange() && !worldObj.getBlock(i, j, k).equals(Blocks.air));
 		
 		int side;
 		
 		if(meta % 2 == 0) side = meta + 1;
 		else side = meta - 1;
 		
-		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, world, i, j, k, side, 0.5f, 0.5f, 0.5f))
+		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, worldObj, i, j, k, side, 0.5f, 0.5f, 0.5f))
 		{
 			//Extra Stuff maybe
 		}
-		else if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, world, i, j, k, side, 0.5f, 0.5f, 0.5f))
+		else if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, worldObj, i, j, k, side, 0.5f, 0.5f, 0.5f))
 		{
 			//Extra Stuff maybe
 		}
 		else
 		{
-			this.setInventorySlotContents(slot, item.onItemRightClick(this.getStackInSlot(slot), world, fakePlayer));
+			this.setInventorySlotContents(slot, item.onItemRightClick(this.getStackInSlot(slot), worldObj, fakePlayer));
 			if(this.getStackInSlot(slot).stackSize == 0) this.setInventorySlotContents(slot, null);
 		}
 	}

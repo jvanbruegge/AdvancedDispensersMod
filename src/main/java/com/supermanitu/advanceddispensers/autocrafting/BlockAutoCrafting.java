@@ -40,9 +40,9 @@ public class BlockAutoCrafting extends BlockAdvancedDispensers
 	@SideOnly(Side.CLIENT)
 	private IIcon textureTop;
 	
-	public BlockAutoCrafting(int tickRate) 
+	public BlockAutoCrafting(int tickRate, int maxBlockCount) 
 	{
-		super(Material.iron);
+		super(Material.iron, maxBlockCount);
 		this.setHardness(2f);
 		this.setBlockName("autoCrafting");
 		this.setStepSound(soundTypeMetal);

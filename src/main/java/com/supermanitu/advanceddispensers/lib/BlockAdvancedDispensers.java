@@ -1,32 +1,44 @@
 package com.supermanitu.advanceddispensers.lib;
 
+import java.util.Hashtable;
 import java.util.Random;
 
 import com.supermanitu.advanceddispensers.autocrafting.TileEntityAutoCrafting;
 import com.supermanitu.advanceddispensers.main.AdvancedDispensersMod;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public abstract class BlockAdvancedDispensers extends BlockContainer
 {
 	private Random rand;
+	private int maxBlockCount; //not static, could be different for multiple Blocks
+	private static Hashtable<EntityLivingBase, Hashtable<Class<? extends BlockAdvancedDispensers>, Integer>> blocksPerPlayer;
+	private boolean once;
 	
-	public BlockAdvancedDispensers(Material material) 
+	public BlockAdvancedDispensers(Material material, int maxBlockCount) 
 	{
 		super(material);
+		this.maxBlockCount = maxBlockCount*2; //doubled method call
 		rand = new Random();
+		once = true;
+		blocksPerPlayer = new Hashtable<EntityLivingBase, Hashtable<Class<? extends BlockAdvancedDispensers>, Integer>>();
 		this.setCreativeTab(AdvancedDispensersMod.advancedDispensersTab);
 	}
 	
@@ -64,6 +76,50 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 	public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
 	{
 		return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(x, y, z));
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase livingBase, ItemStack itemStack)
+	{
+		super.onBlockPlacedBy(world, x, y, z, livingBase, itemStack);
+
+		Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> blockCounts = blocksPerPlayer.get(livingBase);
+
+		if(blockCounts != null && blockCounts.get(this.getClass()) != null && blockCounts.get(this.getClass()) != 0 && blockCounts.get(this.getClass()) >= maxBlockCount)
+		{
+			if(livingBase instanceof EntityPlayer)
+			{
+				EntityPlayer player = (EntityPlayer) livingBase;
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + I18n.format("message.tooManyBlocks", new Object[0])));
+				if(!player.capabilities.isCreativeMode) player.inventory.getStackInSlot(player.inventory.currentItem).stackSize++;
+			}
+			world.setBlock(x, y, z, Blocks.air);
+		}
+		else
+		{
+			if(blocksPerPlayer.get(livingBase) == null)
+			{
+				blocksPerPlayer.put(livingBase, new Hashtable<Class<? extends BlockAdvancedDispensers>, Integer>());
+			}
+			int value = 0;
+			if(blocksPerPlayer.get(livingBase).get(this.getClass()) != null)
+			{
+				value = blocksPerPlayer.get(livingBase).get(this.getClass()).intValue();
+			}
+			Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> old = blocksPerPlayer.get(livingBase);
+			old.put(this.getClass(), value + 1);
+			System.out.println(old.get(this.getClass()).intValue());
+			blocksPerPlayer.put(livingBase, old);
+		}
+	}
+	
+	@Override
+	public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
+	{
+		super.onBlockHarvested(world, x, y, z, meta, player);
+		Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> map = blocksPerPlayer.get(player);
+		map.put(this.getClass(), map.get(this.getClass()).intValue() - 2);
+		System.out.println(map.get(this.getClass()).intValue());
 	}
 	
 	@Override

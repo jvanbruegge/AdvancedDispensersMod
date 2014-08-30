@@ -39,9 +39,9 @@ public class BlockBreaker extends BlockAdvancedDispensers
 	private Random rand = new Random();
 	private long lastActivation;
 	
-	public BlockBreaker(int tier, int fortune, boolean silkTouch, int tickRate) 
+	public BlockBreaker(int tier, int fortune, boolean silkTouch, int tickRate, int maxBlockCount) 
 	{
-		super(Material.rock);
+		super(Material.rock, maxBlockCount);
 		this.setHardness(2f);
 		this.setStepSound(soundTypeStone);
 		this.setBlockName("blockBreaker");

@@ -39,9 +39,9 @@ public class BlockUser extends BlockAdvancedDispensers
 	private UserTextureHelper textureHelper;
 	private boolean enableFakePlayer;
 	
-	public BlockUser(int tickRate, boolean enableFakePlayer) 
+	public BlockUser(int tickRate, boolean enableFakePlayer, int maxBlockCount) 
 	{
-		super(Material.wood);
+		super(Material.wood, maxBlockCount);
 		this.tickRate = tickRate;
 		this.setHardness(2f);
 		this.setBlockName("blockUser");
@@ -105,7 +105,7 @@ public class BlockUser extends BlockAdvancedDispensers
 			
 			if(enableFakePlayer)
 			{
-				tileEntity.useItem(world, x, y, z, meta, slot);
+				tileEntity.useItem(slot);
 			}
 			else if(!Block.getBlockFromItem(item).equals(Blocks.air))
 			{
@@ -120,7 +120,7 @@ public class BlockUser extends BlockAdvancedDispensers
 	@Override
 	public TileEntity createNewTileEntity(World world, int var2)
 	{
-		return new TileEntityUser(world);
+		return new TileEntityUser();
 	}
 	
 	public Object[] getRecipe()

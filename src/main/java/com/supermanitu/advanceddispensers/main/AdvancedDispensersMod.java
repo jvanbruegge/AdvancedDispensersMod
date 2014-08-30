@@ -96,7 +96,7 @@ public class AdvancedDispensersMod
 				 {
 					 for(int j = 0; j < 4; j++)
 					 {
-						 blockBreaker[counter] = new BlockBreaker(i+2, j, false, breakerConfig.getTick());
+						 blockBreaker[counter] = new BlockBreaker(i+2, j, false, breakerConfig.getTick(), breakerConfig.getMaxBlockCount());
 						 GameRegistry.registerBlock(blockBreaker[counter], blockBreaker[counter].getUnlocalizedName().substring(5));
 						 GameRegistry.addShapedRecipe(new ItemStack(blockBreaker[counter], 1), blockBreaker[counter].getRecipe());
 						 counter++;
@@ -104,7 +104,7 @@ public class AdvancedDispensersMod
 				 }
 				 else
 				 {
-					 blockBreaker[counter] = new BlockBreaker(i+2, 0, false, breakerConfig.getTick());
+					 blockBreaker[counter] = new BlockBreaker(i+2, 0, false, breakerConfig.getTick(), breakerConfig.getMaxBlockCount());
 					 GameRegistry.registerBlock(blockBreaker[counter], blockBreaker[counter].getUnlocalizedName().substring(5));
 					 GameRegistry.addShapedRecipe(new ItemStack(blockBreaker[counter], 1), blockBreaker[counter].getRecipe());
 					 counter++;
@@ -114,7 +114,7 @@ public class AdvancedDispensersMod
 			 {
 				 for(int i = 0; i < 2; i++)
 				 {
-					 blockBreaker[counter] = new BlockBreaker(i+2, 0, true, breakerConfig.getTick());
+					 blockBreaker[counter] = new BlockBreaker(i+2, 0, true, breakerConfig.getTick(), breakerConfig.getMaxBlockCount());
 					 GameRegistry.registerBlock(blockBreaker[counter], blockBreaker[counter].getUnlocalizedName().substring(5));
 					 GameRegistry.addShapedRecipe(new ItemStack(blockBreaker[counter], 1), blockBreaker[counter].getRecipe());
 					 counter++;
@@ -126,7 +126,7 @@ public class AdvancedDispensersMod
 		 //User
 		 if(userConfig.isEnabled())
 		 {
-			 blockUser = new BlockUser(userConfig.getTick(), userConfig.isFakePlayerEnabled());
+			 blockUser = new BlockUser(userConfig.getTick(), userConfig.isFakePlayerEnabled(), userConfig.getMaxBlockCount());
 			 GameRegistry.registerBlock(blockUser, blockUser.getUnlocalizedName().substring(5));
 			 GameRegistry.registerTileEntity(TileEntityUser.class, "tileEntityUser");
 			 GameRegistry.addShapedRecipe(new ItemStack(blockUser, 1), blockUser.getRecipe());
@@ -135,7 +135,7 @@ public class AdvancedDispensersMod
 		 //Automated Crafting Table
 		 if(autoCraftingConfig.isEnabled())
 		 {
-			 blockAutoCrafting = new BlockAutoCrafting(autoCraftingConfig.getTick());
+			 blockAutoCrafting = new BlockAutoCrafting(autoCraftingConfig.getTick(), autoCraftingConfig.getMaxBlockCount());
 			 GameRegistry.registerBlock(blockAutoCrafting, blockAutoCrafting.getUnlocalizedName().substring(5));
 			 GameRegistry.registerTileEntity(TileEntityAutoCrafting.class, "tileEntityAutoCrafting");
 			 GameRegistry.addShapedRecipe(new ItemStack(blockAutoCrafting, 1), blockAutoCrafting.getRecipe());
