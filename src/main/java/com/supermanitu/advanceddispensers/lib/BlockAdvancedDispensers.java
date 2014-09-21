@@ -85,7 +85,7 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 
 		Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> blockCounts = blocksPerPlayer.get(livingBase);
 
-		if(blockCounts != null && blockCounts.get(this.getClass()) != null && blockCounts.get(this.getClass()) != 0 && blockCounts.get(this.getClass()) >= maxBlockCount)
+		/*if(blockCounts != null && blockCounts.get(this.getClass()) != null && blockCounts.get(this.getClass()) != 0 && blockCounts.get(this.getClass()) >= maxBlockCount)
 		{
 			if(livingBase instanceof EntityPlayer)
 			{
@@ -110,7 +110,7 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 			old.put(this.getClass(), value + 1);
 			System.out.println(old.get(this.getClass()).intValue());
 			blocksPerPlayer.put(livingBase, old);
-		}
+		}*/
 	}
 	
 	@Override
