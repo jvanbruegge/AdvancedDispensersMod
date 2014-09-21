@@ -251,12 +251,12 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
 					{
 						if(containsItem(stack))
 						{
-							System.out.println("putStack: " + stack.stackSize);
+							//System.out.println("putStack: " + stack.stackSize);
 							putStack(stack);
 						}
 						else
 						{
-							System.out.println("putInEmptySlot: " + stack.stackSize);
+							//System.out.println("putInEmptySlot: " + stack.stackSize);
 							putInEmptySlot(stack);
 						}
 						return;
@@ -264,7 +264,6 @@ public class TileEntityAutoCrafting extends TileEntity implements ISidedInventor
 					if(stack.stackSize == 0) return;
 					stack.stackSize--;
 					inventory[i].stackSize++;
-					System.out.println("Stack.stacksize: " + stack.stackSize);
 				}
 			}
 		}
