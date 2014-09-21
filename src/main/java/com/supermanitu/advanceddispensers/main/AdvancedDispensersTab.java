@@ -17,7 +17,7 @@ public class AdvancedDispensersTab extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() 
 	{
-		return Item.getItemFromBlock(AdvancedDispensersMod.blockPlacer);
+		return Item.getItemFromBlock(AdvancedDispensersMod.blockUser);
 	}
 
 }

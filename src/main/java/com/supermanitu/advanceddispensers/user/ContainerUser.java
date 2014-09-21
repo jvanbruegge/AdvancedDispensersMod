@@ -1,4 +1,4 @@
-package com.supermanitu.advanceddispensers.placer;
+package com.supermanitu.advanceddispensers.user;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -7,14 +7,14 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityDispenser;
 
-public class ContainerPlacer extends Container
+public class ContainerUser extends Container
 {
-    private TileEntityPlacer tileEntityPlacer;
+    private TileEntityUser tileEntityUser;
     private static final String __OBFID = "CL_00001763";
 
-    public ContainerPlacer(IInventory inventory, TileEntityPlacer tileEntityPlacer)
+    public ContainerUser(IInventory inventory, TileEntityUser tileEntityUser)
     {
-        this.tileEntityPlacer = tileEntityPlacer;
+        this.tileEntityUser = tileEntityUser;
         int i;
         int j;
 
@@ -22,7 +22,7 @@ public class ContainerPlacer extends Container
         {
             for (j = 0; j < 3; ++j)
             {
-                this.addSlotToContainer(new Slot(tileEntityPlacer, j + i * 3, 62 + j * 18, 17 + i * 18));
+                this.addSlotToContainer(new Slot(tileEntityUser, j + i * 3, 62 + j * 18, 17 + i * 18));
             }
         }
 
@@ -42,7 +42,7 @@ public class ContainerPlacer extends Container
 
     public boolean canInteractWith(EntityPlayer par1EntityPlayer)
     {
-        return this.tileEntityPlacer.isUseableByPlayer(par1EntityPlayer);
+        return this.tileEntityUser.isUseableByPlayer(par1EntityPlayer);
     }
 
     /**

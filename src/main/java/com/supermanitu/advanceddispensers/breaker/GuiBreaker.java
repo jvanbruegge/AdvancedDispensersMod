@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiBreaker extends GuiContainer
 {
-	private static final ResourceLocation breakerGuiTextures = new ResourceLocation("textures/gui/container/dispenser.png");
+	private final ResourceLocation breakerGuiTextures = new ResourceLocation("textures/gui/container/dispenser.png");
     public TileEntityBreaker tileEntityBreaker;
     private static final String __OBFID = "CL_00000765";
 
