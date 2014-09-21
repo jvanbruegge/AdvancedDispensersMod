@@ -1,5 +1,6 @@
 package com.supermanitu.advanceddispensers.lib;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 	protected ItemStack[] inventory;
 	private String invName;
 	private int invSize;
+	private EntityLivingBase owner;
 	
 	public TileEntityAdvancedDispensers(String invName, int invSize)
 	{
@@ -181,5 +183,15 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 	public ItemStack[] getInventory()
 	{
 		return inventory;
+	}
+	
+	public void setOwner(EntityLivingBase base)
+	{
+		this.owner = base;
+	}
+	
+	public EntityLivingBase getOwner()
+	{
+		return owner;
 	}
 }

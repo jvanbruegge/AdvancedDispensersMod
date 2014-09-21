@@ -21,17 +21,22 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 	public TileEntityUser()
 	{
 		super("container.user", 9);
+		fakePlayer = null;
 	}
 	
 	@Override
 	public void setWorldObj(World world)
 	{
 		super.setWorldObj(world);
-		fakePlayer = new EntityFakePlayer(worldObj, this, xCoord, yCoord, zCoord, worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
 	}
 	
 	public void useItem(int slot)
 	{
+		if(fakePlayer == null)
+		{
+			fakePlayer = new EntityFakePlayer(worldObj, this, xCoord, yCoord, zCoord, worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+		}
+		
 		Item item = this.getStackInSlot(slot).getItem();
 		
 		int i = xCoord, j = yCoord, k = zCoord, c = 0, meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
