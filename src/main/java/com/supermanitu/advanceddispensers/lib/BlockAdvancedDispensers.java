@@ -149,6 +149,7 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
         }
     }
 	
+	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {
         TileEntityAdvancedDispensers tileEntityAdvancedDispensers = (TileEntityAdvancedDispensers)world.getTileEntity(x, y, z);
@@ -195,6 +196,11 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
     }
 	
 	public abstract Object[] getRecipe();
+	
+	public Random getRandom()
+	{
+		return rand;
+	}
 	
 	protected void setDefaultDirection(World world, int x, int y, int z, EntityLivingBase livingBase)
 	{
