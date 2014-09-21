@@ -103,9 +103,11 @@ public class BlockAutoCrafting extends BlockAdvancedDispensers
 
         if (tileEntityAdvancedDispensers != null)
         {
-            for (int i1 = 0; i1 < tileEntityAdvancedDispensers.getSizeInventory()-1; ++i1)
+            for (int i1 = 0; i1 < tileEntityAdvancedDispensers.getSizeInventory(); ++i1)
             {
+            	if(i1 == 9) continue;
                 ItemStack itemstack = tileEntityAdvancedDispensers.getStackInSlot(i1);
+                System.out.println("Slot: " + i1 + " Item: " + itemstack);
 
                 if (itemstack != null)
                 {
@@ -136,10 +138,9 @@ public class BlockAutoCrafting extends BlockAdvancedDispensers
                     }
                 }
             }
-
+            super.breakOriginal(world, x, y, z, block, p_149749_6_);
             world.func_147453_f(x, y, z, block);
         }
-        super.breakBlock(world, x, y, z, block, p_149749_6_);
 	}
 
 	@Override

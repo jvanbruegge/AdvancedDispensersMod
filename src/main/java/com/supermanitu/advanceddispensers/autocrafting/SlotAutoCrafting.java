@@ -90,8 +90,7 @@ public class SlotAutoCrafting extends Slot
 
 					if (itemstack2 != null && itemstack2.isItemStackDamageable() && itemstack2.getItemDamage() > itemstack2.getMaxDamage())
 					{
-						//TODO Überprüfen: MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(thePlayer, itemstack2));
-					continue;
+						continue;
 					}
 
 					if (!itemstack1.getItem().doesContainerItemLeaveCraftingGrid(itemstack1))

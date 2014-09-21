@@ -122,7 +122,11 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 		if(map != null)
 		{
 			EntityLivingBase owner = ((TileEntityAdvancedDispensers)world.getTileEntity(x, y, z)).getOwner();
-			int i = map.get(this.getClass()).intValue();
+			int i = 0;
+			if(map.get(this.getClass()) != null)
+			{
+				i = map.get(this.getClass());
+			}
 			if(i - 2 >= 0 && owner.equals(player))
 			{
 				map.put(this.getClass(), i - 2);
@@ -193,6 +197,11 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
         }
         super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
+	
+	public void breakOriginal(World world, int x, int y, int z, Block block, int p_149749_6_)
+	{
+		super.breakBlock(world, x, y, z, block, p_149749_6_);
+	}
 	
 	public abstract Object[] getRecipe();
 	
