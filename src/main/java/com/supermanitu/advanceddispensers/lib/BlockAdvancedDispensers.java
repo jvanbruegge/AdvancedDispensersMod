@@ -110,7 +110,6 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 			}
 			Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> old = blocksPerPlayer.get(livingBase);
 			old.put(this.getClass(), value + 1);
-			System.out.println(old.get(this.getClass()).intValue());
 			blocksPerPlayer.put(livingBase, old);
 		}
 	}
