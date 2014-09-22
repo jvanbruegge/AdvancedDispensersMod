@@ -1,5 +1,10 @@
 package com.supermanitu.advanceddispensers.lib;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Hashtable;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +21,7 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 	private String invName;
 	private int invSize, ownerID, maxBlockCount;
 	private static Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<Integer, Integer>> blocksPerPlayer; //The Kind of block itself, the ownerID and the amount of Blocks
+	private static boolean read = false, saved = false;
 	
 	public TileEntityAdvancedDispensers(String invName, int invSize)
 	{
@@ -164,6 +170,26 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
         {
         	this.ownerID = tagCompound.getInteger("Owner");
         }
+        
+        if(!read && tagCompound.hasKey("blocksPerPlayer"))
+        {
+        	read = true;
+        	byte[] array = tagCompound.getByteArray("blocksPerPlayer");
+        	try
+        	{
+        		ByteArrayInputStream in = new ByteArrayInputStream(array);
+        		ObjectInputStream objIn = new ObjectInputStream(in);
+        		
+        		blocksPerPlayer = (Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<Integer, Integer>>) objIn.readObject(); //cast of Doom :D
+        		
+        		System.out.println(blocksPerPlayer.toString());
+        		
+        		objIn.close();
+        		in.close();
+        	}
+        	catch(IOException e) {e.printStackTrace();} 
+        	catch (ClassNotFoundException e) {e.printStackTrace();}
+        }
     }
 	
 	@Override
@@ -193,6 +219,26 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
         if(ownerID != -1)
         {
         	tagCompound.setInteger("Owner", ownerID);
+        }
+        if(!saved)
+        {
+        	saved = true;
+        	try
+            {
+            	ByteArrayOutputStream out = new ByteArrayOutputStream();
+            	ObjectOutputStream objOut = new ObjectOutputStream(out);
+
+            	objOut.writeObject(blocksPerPlayer);
+            	objOut.flush();
+
+            	byte[] byteArray = out.toByteArray();
+
+            	objOut.close();
+            	out.close();
+
+            	tagCompound.setByteArray("blocksPerPlayer", byteArray);
+            }
+            catch (IOException e) {e.printStackTrace();}
         }
     }
 	
@@ -246,7 +292,7 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 		Hashtable<Integer, Integer> blockCounts = blocksPerPlayer.get(this.getClass());
 		
 		int i = 0;
-		if(blockCounts.get(owner) != null)
+		if(blockCounts != null && blockCounts.get(owner) != null)
 		{
 			i = blockCounts.get(owner);
 		}
