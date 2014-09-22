@@ -225,7 +225,11 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 		
 		if(maxBlockCount != 0) //User can have infinite Blocks
 		{
-			if(blockCounts.get(owner) != null && blockCounts.get(owner) < maxBlockCount)
+			if(blockCounts.get(owner) == null)
+			{
+				blockCounts.put(owner, 1);
+			}
+			else if(blockCounts.get(owner) < maxBlockCount)
 			{
 				blockCounts.put(owner, blockCounts.get(owner) + 1);
 			}
