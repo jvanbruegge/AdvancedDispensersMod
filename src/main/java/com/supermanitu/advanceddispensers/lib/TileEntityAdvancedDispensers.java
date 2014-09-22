@@ -185,8 +185,6 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
         		
         		blocksPerPlayer = (Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<UUID, Integer>>) objIn.readObject(); //cast of Doom :D
         		
-        		System.out.println(blocksPerPlayer.toString());
-        		
         		objIn.close();
         		in.close();
         	}
