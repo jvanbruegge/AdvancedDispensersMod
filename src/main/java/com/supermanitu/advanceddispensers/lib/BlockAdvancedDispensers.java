@@ -81,7 +81,7 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 		
 		TileEntityAdvancedDispensers tileEntity = ((TileEntityAdvancedDispensers)world.getTileEntity(x, y, z));
 		
-		if(!tileEntity.onBlockPlaced(maxBlockCount, livingBase.getEntityId()))
+		if(!tileEntity.onBlockPlaced(maxBlockCount, livingBase.getPersistentID()))
 		{
 			if(livingBase instanceof EntityPlayer)
 			{
@@ -100,7 +100,7 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 		
 		TileEntityAdvancedDispensers tileEntity = ((TileEntityAdvancedDispensers)world.getTileEntity(x, y, z));
 		
-		tileEntity.onBlockDestroyed(player.getEntityId());
+		tileEntity.onBlockDestroyed(player.getPersistentID());
 	}
 	
 	@Override

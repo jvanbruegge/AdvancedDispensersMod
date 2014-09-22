@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Hashtable;
+import java.util.UUID;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,8 +20,9 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 {
 	protected ItemStack[] inventory;
 	private String invName;
-	private int invSize, ownerID, maxBlockCount;
-	private static Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<Integer, Integer>> blocksPerPlayer; //The Kind of block itself, the ownerID and the amount of Blocks
+	private int invSize, maxBlockCount;
+	private UUID ownerID;
+	private static Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<UUID, Integer>> blocksPerPlayer; //The Kind of block itself, the ownerID and the amount of Blocks
 	private static boolean read = false, saved = false;
 	
 	public TileEntityAdvancedDispensers(String invName, int invSize)
@@ -28,10 +30,10 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 		this.invName = invName;
 		this.invSize = invSize;
 		this.inventory = new ItemStack[invSize];
-		this.ownerID = -1;
+		this.ownerID = null;
 		this.maxBlockCount = 0;
 		
-		if(blocksPerPlayer == null) blocksPerPlayer = new Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<Integer, Integer>>();
+		if(blocksPerPlayer == null) blocksPerPlayer = new Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<UUID, Integer>>();
 	}
 	
 	@Override
@@ -168,7 +170,8 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
         
         if(tagCompound.hasKey("Owner", 3))
         {
-        	this.ownerID = tagCompound.getInteger("Owner");
+        	String owner = tagCompound.getString("Owner");
+        	this.ownerID = UUID.fromString(owner);
         }
         
         if(!read && tagCompound.hasKey("blocksPerPlayer"))
@@ -180,7 +183,7 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
         		ByteArrayInputStream in = new ByteArrayInputStream(array);
         		ObjectInputStream objIn = new ObjectInputStream(in);
         		
-        		blocksPerPlayer = (Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<Integer, Integer>>) objIn.readObject(); //cast of Doom :D
+        		blocksPerPlayer = (Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<UUID, Integer>>) objIn.readObject(); //cast of Doom :D
         		
         		System.out.println(blocksPerPlayer.toString());
         		
@@ -216,9 +219,9 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
             tagCompound.setString("CustomName", this.invName);
         }
         
-        if(ownerID != -1)
+        if(ownerID != null)
         {
-        	tagCompound.setInteger("Owner", ownerID);
+        	tagCompound.setString("Owner", ownerID.toString());
         }
         if(!saved)
         {
@@ -247,16 +250,16 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 		return inventory;
 	}
 	
-	public boolean onBlockPlaced(int max, int owner)
+	public boolean onBlockPlaced(int max, UUID owner)
 	{
 		this.maxBlockCount = max;
 		this.ownerID = owner;
 		
-		Hashtable<Integer, Integer> blockCounts = null;
+		Hashtable<UUID, Integer> blockCounts = null;
 		
 		if(blocksPerPlayer.get(this.getClass()) == null)
 		{
-			blockCounts = new Hashtable<Integer, Integer>();
+			blockCounts = new Hashtable<UUID, Integer>();
 			blocksPerPlayer.put(this.getClass(), blockCounts);
 		}
 		else
@@ -282,9 +285,9 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 		return true;
 	}
 	
-	public void onBlockDestroyed(int owner)
+	public void onBlockDestroyed(UUID owner)
 	{
-		Hashtable<Integer, Integer> blockCounts = blocksPerPlayer.get(this.getClass());
+		Hashtable<UUID, Integer> blockCounts = blocksPerPlayer.get(this.getClass());
 		
 		int i = 0;
 		if(blockCounts != null && blockCounts.get(owner) != null)
