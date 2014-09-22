@@ -247,11 +247,6 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 		return inventory;
 	}
 	
-	public int getOwnerID()
-	{
-		return ownerID;
-	}
-	
 	public boolean onBlockPlaced(int max, int owner)
 	{
 		this.maxBlockCount = max;
