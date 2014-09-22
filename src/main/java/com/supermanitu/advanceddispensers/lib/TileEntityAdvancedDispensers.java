@@ -1,5 +1,7 @@
 package com.supermanitu.advanceddispensers.lib;
 
+import java.util.Hashtable;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -12,14 +14,18 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 {
 	protected ItemStack[] inventory;
 	private String invName;
-	private int invSize;
-	private EntityLivingBase owner;
+	private int invSize, ownerID, maxBlockCount;
+	private static Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<Integer, Integer>> blocksPerPlayer; //The Kind of block itself, the ownerID and the amount of Blocks
 	
 	public TileEntityAdvancedDispensers(String invName, int invSize)
 	{
 		this.invName = invName;
 		this.invSize = invSize;
 		this.inventory = new ItemStack[invSize];
+		this.ownerID = -1;
+		this.maxBlockCount = 0;
+		
+		if(blocksPerPlayer == null) blocksPerPlayer = new Hashtable<Class<? extends TileEntityAdvancedDispensers>, Hashtable<Integer, Integer>>();
 	}
 	
 	@Override
@@ -153,6 +159,11 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
         {
             this.invName = tagCompound.getString("CustomName");
         }
+        
+        if(tagCompound.hasKey("Owner", 3))
+        {
+        	this.ownerID = tagCompound.getInteger("Owner");
+        }
     }
 	
 	@Override
@@ -178,6 +189,11 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
         {
             tagCompound.setString("CustomName", this.invName);
         }
+        
+        if(ownerID != -1)
+        {
+        	tagCompound.setInteger("Owner", ownerID);
+        }
     }
 	
 	public ItemStack[] getInventory()
@@ -185,13 +201,54 @@ public abstract class TileEntityAdvancedDispensers extends TileEntity implements
 		return inventory;
 	}
 	
-	public void setOwner(EntityLivingBase base)
+	public int getOwnerID()
 	{
-		this.owner = base;
+		return ownerID;
 	}
 	
-	public EntityLivingBase getOwner()
+	public boolean onBlockPlaced(int max, int owner)
 	{
-		return owner;
+		this.maxBlockCount = max;
+		this.ownerID = owner;
+		
+		Hashtable<Integer, Integer> blockCounts = null;
+		
+		if(blocksPerPlayer.get(this.getClass()) == null)
+		{
+			blockCounts = new Hashtable<Integer, Integer>();
+			blocksPerPlayer.put(this.getClass(), blockCounts);
+		}
+		else
+		{
+			blockCounts = blocksPerPlayer.get(this.getClass());
+		}
+		
+		if(maxBlockCount != 0) //User can have infinite Blocks
+		{
+			if(blockCounts.get(owner) != null && blockCounts.get(owner) < maxBlockCount)
+			{
+				blockCounts.put(owner, blockCounts.get(owner) + 1);
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public void onBlockDestroyed(int owner)
+	{
+		Hashtable<Integer, Integer> blockCounts = blocksPerPlayer.get(this.getClass());
+		
+		int i = 0;
+		if(blockCounts.get(owner) != null)
+		{
+			i = blockCounts.get(owner);
+		}
+		if(i - 2 >= 0 && this.ownerID == owner)
+		{
+			blockCounts.put(owner, i - 2);
+		}
 	}
 }

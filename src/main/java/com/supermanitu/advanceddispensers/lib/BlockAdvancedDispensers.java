@@ -29,16 +29,12 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 {
 	private Random rand;
 	private int maxBlockCount; //not static, could be different for multiple Blocks
-	private static Hashtable<EntityLivingBase, Hashtable<Class<? extends BlockAdvancedDispensers>, Integer>> blocksPerPlayer;
-	private boolean once;
 	
 	public BlockAdvancedDispensers(Material material, int maxBlockCount) 
 	{
 		super(material);
 		this.maxBlockCount = maxBlockCount*2; //doubled method call
 		rand = new Random();
-		once = true;
-		blocksPerPlayer = new Hashtable<EntityLivingBase, Hashtable<Class<? extends BlockAdvancedDispensers>, Integer>>();
 		this.setCreativeTab(AdvancedDispensersMod.advancedDispensersTab);
 	}
 	
@@ -83,11 +79,9 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 	{
 		super.onBlockPlacedBy(world, x, y, z, livingBase, itemStack);
 		
-		((TileEntityAdvancedDispensers)world.getTileEntity(x, y, z)).setOwner(livingBase);
-
-		Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> blockCounts = blocksPerPlayer.get(livingBase);
-
-		if(maxBlockCount != 0 && blockCounts != null && blockCounts.get(this.getClass()) != null && blockCounts.get(this.getClass()) >= maxBlockCount)
+		TileEntityAdvancedDispensers tileEntity = ((TileEntityAdvancedDispensers)world.getTileEntity(x, y, z));
+		
+		if(!tileEntity.onBlockPlaced(maxBlockCount, livingBase.getEntityId()))
 		{
 			if(livingBase instanceof EntityPlayer)
 			{
@@ -97,41 +91,16 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
 			}
 			world.setBlock(x, y, z, Blocks.air);
 		}
-		else
-		{
-			if(blocksPerPlayer.get(livingBase) == null)
-			{
-				blocksPerPlayer.put(livingBase, new Hashtable<Class<? extends BlockAdvancedDispensers>, Integer>());
-			}
-			int value = 0;
-			if(blocksPerPlayer.get(livingBase).get(this.getClass()) != null)
-			{
-				value = blocksPerPlayer.get(livingBase).get(this.getClass()).intValue();
-			}
-			Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> old = blocksPerPlayer.get(livingBase);
-			old.put(this.getClass(), value + 1);
-			blocksPerPlayer.put(livingBase, old);
-		}
 	}
 	
 	@Override
 	public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
 	{
 		super.onBlockHarvested(world, x, y, z, meta, player);
-		Hashtable<Class<? extends BlockAdvancedDispensers>, Integer> map = blocksPerPlayer.get(player);
-		if(map != null)
-		{
-			EntityLivingBase owner = ((TileEntityAdvancedDispensers)world.getTileEntity(x, y, z)).getOwner();
-			int i = 0;
-			if(map.get(this.getClass()) != null)
-			{
-				i = map.get(this.getClass());
-			}
-			if(i - 2 >= 0 && owner.equals(player))
-			{
-				map.put(this.getClass(), i - 2);
-			}
-		}
+		
+		TileEntityAdvancedDispensers tileEntity = ((TileEntityAdvancedDispensers)world.getTileEntity(x, y, z));
+		
+		tileEntity.onBlockDestroyed(player.getEntityId());
 	}
 	
 	@Override

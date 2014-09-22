@@ -107,7 +107,6 @@ public class BlockAutoCrafting extends BlockAdvancedDispensers
             {
             	if(i1 == 9) continue;
                 ItemStack itemstack = tileEntityAdvancedDispensers.getStackInSlot(i1);
-                System.out.println("Slot: " + i1 + " Item: " + itemstack);
 
                 if (itemstack != null)
                 {
