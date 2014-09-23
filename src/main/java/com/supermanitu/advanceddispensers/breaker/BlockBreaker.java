@@ -201,7 +201,7 @@ public class BlockBreaker extends BlockAdvancedDispensers
 			else
 			{
 				drops = new ArrayList<ItemStack>();
-				drops.add(new ItemStack(block, 1));
+				drops.add(new ItemStack(block, 1, blockmeta));
 			}
 			
 			TileEntityBreaker tileEntityBreaker = (TileEntityBreaker) world.getTileEntity(x, y, z);
