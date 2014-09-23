@@ -197,11 +197,16 @@ public class BlockBreaker extends BlockAdvancedDispensers
 		{
 			ArrayList<ItemStack> drops = null;
 			
-			if(!silkTouch) drops = block.getDrops(world, i, j, k, blockmeta, fortune);
-			else
+			TileEntityBreaker tileEntity = (TileEntityBreaker) world.getTileEntity(x, y, z);
+			
+			if(silkTouch && tileEntity.canSilkHarvest(block, world, i, j, k, blockmeta))
 			{
 				drops = new ArrayList<ItemStack>();
 				drops.add(new ItemStack(block, 1, blockmeta));
+			}
+			else
+			{
+				drops = block.getDrops(world, i, j, k, blockmeta, fortune);
 			}
 			
 			TileEntityBreaker tileEntityBreaker = (TileEntityBreaker) world.getTileEntity(x, y, z);
