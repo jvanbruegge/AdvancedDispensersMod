@@ -24,3 +24,8 @@ tile.blockBreeder.name=Futtertrog
 container.breeder=Futtertrog
 
 itemGroup.advanceddispenserstabs=Verbesserte Spender
+
+message.tooManyBlocks=Du hast zu viele Blöcke von dieser Sorte.
+
+error.versionCheck=Fehler bei der Versionsprüfung:
+error.loadVersion=Fehler beim Laden der neuen Version

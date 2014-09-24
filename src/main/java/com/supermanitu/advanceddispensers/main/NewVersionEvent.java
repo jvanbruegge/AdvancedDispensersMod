@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -29,9 +30,9 @@ public class NewVersionEvent
 		}
 		catch (MalformedURLException e) 
 		{
-			System.err.println("Error: Fehler bei der Versionsprüfung:");
+			System.err.println(I18n.format("error.versionCheck"));
 			e.printStackTrace();
-			return "Error in loading new version number";
+			return I18n.format("error.loadVersion");
 		}
 		
 		InputStreamReader is = null;
@@ -41,8 +42,8 @@ public class NewVersionEvent
 		}
 		catch (IOException e) 
 		{
-			System.out.println("Error: Fehler bei der Verbindung zum Internet:");
-			return "Error in loading new version number";
+			System.out.println(I18n.format("error.versionCheck"));
+			return I18n.format("error.loadVersion");
 		}
         BufferedReader in = new BufferedReader(is);
         
@@ -54,7 +55,7 @@ public class NewVersionEvent
 		catch (IOException e) 
 		{
 			e.printStackTrace();
-			return "Error in loading new version number";
+			return I18n.format("error.loadVersion");
 		}
         
         try 
@@ -64,9 +65,9 @@ public class NewVersionEvent
 		} 
         catch (IOException e)
 		 {
-			 System.out.println("Error: Fehler beim Schließen der Verbindung zum Internet:");
+			 System.out.println(I18n.format("error.versionCheck"));
 			 e.printStackTrace();
-			 return "Error in loading new version number";
+			 return I18n.format("error.loadVersion");
 		 }
         
 		return h;

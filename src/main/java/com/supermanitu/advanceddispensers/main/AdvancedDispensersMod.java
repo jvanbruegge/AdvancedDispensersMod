@@ -9,6 +9,7 @@ import java.net.URL;
 import org.apache.commons.lang3.BooleanUtils;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -165,7 +166,7 @@ public class AdvancedDispensersMod
 		 } 
 		 catch (MalformedURLException e) 
 		 {
-			 System.err.println("Error: Fehler bei der Versionspr�fung:");
+			 System.err.println(I18n.format("error.versionCheck"));
 			 e.printStackTrace();
 			 return true;
 		 }
@@ -177,7 +178,7 @@ public class AdvancedDispensersMod
 		 }
 		 catch (IOException e) 
 		 {
-			 System.out.println("Error: Fehler bei der Verbindung zum Internet:");
+			 System.out.println(I18n.format("error.versionCheck"));
 			 return true;
 		 }
 		 BufferedReader in = new BufferedReader(is);
@@ -193,7 +194,7 @@ public class AdvancedDispensersMod
 		 } 
 		 catch (IOException e) 
 		 {
-			 System.out.println("Error: Fehler beim Schlie�en der Verbindung zum Internet:");
+			 System.out.println(I18n.format("error.versionCheck"));
 			 e.printStackTrace();
 			 return true;
 		 }
@@ -205,7 +206,7 @@ public class AdvancedDispensersMod
 		 }
 		 catch (IOException e)
 		 {
-			 System.out.println("Error: Fehler beim Schlie�en der Verbindung zum Internet:");
+			 System.out.println(I18n.format("error.versionCheck"));
 			 e.printStackTrace();
 			 return true;
 		 }

@@ -26,3 +26,6 @@ container.breeder=Feeding Trough
 itemGroup.advanceddispenserstabs=Advanced Dispensers
 
 message.tooManyBlocks=You already have the max amount of blocks of this kind.
+
+error.versionCheck=Error while checking for new version
+error.loadVersion=Error while loading new Version
