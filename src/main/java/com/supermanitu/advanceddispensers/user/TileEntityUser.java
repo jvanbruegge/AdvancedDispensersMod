@@ -1,9 +1,15 @@
 package com.supermanitu.advanceddispensers.user;
 
+import java.util.List;
+
 import com.supermanitu.advanceddispensers.lib.AdvancedDispensersLib;
 import com.supermanitu.advanceddispensers.lib.TileEntityAdvancedDispensers;
 import com.supermanitu.advanceddispensers.main.EntityFakePlayer;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -12,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class TileEntityUser extends TileEntityAdvancedDispensers
@@ -30,42 +37,64 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 		super.setWorldObj(world);
 	}
 	
-	public void useItem(int slot)
+	public boolean useItem(int slot)
 	{
 		if(fakePlayer == null)
 		{
 			fakePlayer = new EntityFakePlayer(worldObj, this, xCoord, yCoord, zCoord, worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
 		}
-		
+
 		Item item = this.getStackInSlot(slot).getItem();
+
+		int i = xCoord, j = yCoord, k = zCoord, meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+
+		i = AdvancedDispensersLib.INSTANCE.getI(meta, i);
+		j = AdvancedDispensersLib.INSTANCE.getJ(meta, j);
+		k = AdvancedDispensersLib.INSTANCE.getK(meta, k);
 		
-		int i = xCoord, j = yCoord, k = zCoord, c = 0, meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+		Block user = worldObj.getBlock(xCoord, yCoord, zCoord);
+		int userMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
 		
-		do
+		AxisAlignedBB rect = null;
+		
+		int deltaX = xCoord - i, deltaY = yCoord - j, deltaZ = zCoord - k;
+		
+		if(deltaX > 0 || deltaY > 0 || deltaZ > 0)
 		{
-			i = AdvancedDispensersLib.INSTANCE.getI(meta, i);
-			j = AdvancedDispensersLib.INSTANCE.getJ(meta, j);
-			k = AdvancedDispensersLib.INSTANCE.getK(meta, k);
-			c++;
-		}while(c < fakePlayer.getRange() && !worldObj.getBlock(i, j, k).equals(Blocks.air));
+			rect = AxisAlignedBB.getBoundingBox(xCoord - deltaX*4 - 0.1, yCoord - deltaY*4 - 0.1, zCoord - deltaZ*4 - 0.1, xCoord + 0.1, yCoord + 0.1, zCoord + 0.1);
+		}
+		else
+		{
+			rect = AxisAlignedBB.getBoundingBox(xCoord - 0.1, yCoord - 0.1, zCoord - 0.1, xCoord + deltaX*4 + 0.1, yCoord + deltaY*4 + 0.1, zCoord + deltaZ*4 + 0.1);
+		}
+		List<EntityLivingBase> near = worldObj.getEntitiesWithinAABB(EntitySheep.class, rect);
 		
-		int side;
-		
-		if(meta % 2 == 0) side = meta + 1;
-		else side = meta - 1;
-		
-		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, worldObj, i, j, k, side, 0.5f, 0.5f, 0.5f))
+		for(EntityLivingBase base : near)
+		{
+			if(item.itemInteractionForEntity(this.getStackInSlot(slot), fakePlayer, base))
+			{
+				return true;
+			}
+		}
+		//int side;
+
+		//if(meta % 2 == 0) side = meta + 1;
+		//else side = meta - 1;
+
+		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, worldObj, i, j-1, k, 1, 0.5f, 0.5f, 0.5f))
 		{
 			//Extra Stuff maybe
 		}
-		else if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, worldObj, i, j, k, side, 0.5f, 0.5f, 0.5f))
+		else if(item.onItemUse(this.getStackInSlot(slot), fakePlayer, worldObj, i, j-1, k, 1, 0.5f, 0.5f, 0.5f))
 		{
 			//Extra Stuff maybe
 		}
 		else
 		{
 			this.setInventorySlotContents(slot, item.onItemRightClick(this.getStackInSlot(slot), worldObj, fakePlayer));
-			if(this.getStackInSlot(slot).stackSize == 0) this.setInventorySlotContents(slot, null);
 		}
+		AdvancedDispensersLib.INSTANCE.deleteEmptyStacks(this);
+		
+		return true;
 	}
 }

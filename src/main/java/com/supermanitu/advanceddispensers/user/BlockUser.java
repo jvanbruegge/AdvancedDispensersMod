@@ -105,7 +105,7 @@ public class BlockUser extends BlockAdvancedDispensers
 			
 			if(enableFakePlayer)
 			{
-				tileEntity.useItem(slot);
+				boolean b = tileEntity.useItem(slot);
 			}
 			else if(!Block.getBlockFromItem(item).equals(Blocks.air))
 			{

@@ -50,4 +50,15 @@ public class AdvancedDispensersLib
 		default: return z;
 		}
 	}
+	
+	public void deleteEmptyStacks(TileEntityAdvancedDispensers tileEntity)
+	{
+		for(int i = 0; i < tileEntity.getSizeInventory(); i++)
+		{
+			if(tileEntity.getStackInSlot(i) != null && tileEntity.getStackInSlot(i).stackSize == 0)
+			{
+				tileEntity.setInventorySlotContents(i, null);
+			}
+		}
+	}
 }
