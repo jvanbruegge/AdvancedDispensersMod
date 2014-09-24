@@ -43,7 +43,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class AdvancedDispensersMod 
 {
 	public static final String MODID = "advanceddispensers";
-	public static final String VERSION = "1.2.0-b8";
+	public static final String VERSION = "1.2.0-b8 for 1.7.2";
 	
 	@Instance("advanceddispensers")
     public static AdvancedDispensersMod instance;
