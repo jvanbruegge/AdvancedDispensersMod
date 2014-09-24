@@ -15,10 +15,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class TileEntityUser extends TileEntityAdvancedDispensers
@@ -67,6 +69,11 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 		{
 			if(item.itemInteractionForEntity(this.getStackInSlot(slot), fakePlayer, base))
 			{
+				return true;
+			}
+			else if(item instanceof ItemSword && item.hitEntity(this.getStackInSlot(slot), fakePlayer, base))
+			{
+				base.attackEntityFrom(DamageSource.generic, ((ItemSword)item).func_150931_i());
 				return true;
 			}
 		}
