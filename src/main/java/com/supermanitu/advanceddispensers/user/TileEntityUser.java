@@ -61,11 +61,11 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 		
 		if(deltaX > 0 || deltaY > 0 || deltaZ > 0)
 		{
-			rect = AxisAlignedBB.getBoundingBox(xCoord - deltaX*4 - 0.1, yCoord - deltaY*4 - 0.1, zCoord - deltaZ*4 - 0.1, xCoord + 0.1, yCoord + 0.1, zCoord + 0.1);
+			rect = AxisAlignedBB.getBoundingBox(xCoord - deltaX*4 - 0.5, yCoord - deltaY*4 - 0.5, zCoord - deltaZ*4 - 0.5, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
 		}
 		else
 		{
-			rect = AxisAlignedBB.getBoundingBox(xCoord - 0.1, yCoord - 0.1, zCoord - 0.1, xCoord + deltaX*4 + 0.1, yCoord + deltaY*4 + 0.1, zCoord + deltaZ*4 + 0.1);
+			rect = AxisAlignedBB.getBoundingBox(xCoord - 0.5, yCoord - 0.5, zCoord - 0.5, xCoord - deltaX*4 + 0.5, yCoord - deltaY*4 + 0.5, zCoord - deltaZ*4 + 0.5);
 		}
 		List<EntityLivingBase> near = worldObj.getEntitiesWithinAABB(EntitySheep.class, rect);
 		
