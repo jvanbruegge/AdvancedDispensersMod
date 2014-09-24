@@ -167,12 +167,12 @@ public abstract class BlockAdvancedDispensers extends BlockContainer
         super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
 	
+	public abstract Object[] getRecipe();
+	
 	public void breakOriginal(World world, int x, int y, int z, Block block, int p_149749_6_)
 	{
 		super.breakBlock(world, x, y, z, block, p_149749_6_);
 	}
-	
-	public abstract Object[] getRecipe();
 	
 	public Random getRandom()
 	{
