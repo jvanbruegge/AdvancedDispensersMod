@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.2.0-b7"
+version = "1.2.0-b8"
 group= "com.supermanitu.advanceddispensers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "advanceddispensers"
 
