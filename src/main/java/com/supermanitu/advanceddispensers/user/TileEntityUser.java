@@ -31,12 +31,6 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 		fakePlayer = null;
 	}
 	
-	@Override
-	public void setWorldObj(World world)
-	{
-		super.setWorldObj(world);
-	}
-	
 	public boolean useItem(int slot)
 	{
 		if(fakePlayer == null)
@@ -76,10 +70,6 @@ public class TileEntityUser extends TileEntityAdvancedDispensers
 				return true;
 			}
 		}
-		//int side;
-
-		//if(meta % 2 == 0) side = meta + 1;
-		//else side = meta - 1;
 
 		if(item.onItemUseFirst(this.getStackInSlot(slot), fakePlayer, worldObj, i, j-1, k, 1, 0.5f, 0.5f, 0.5f))
 		{
